@@ -15,4 +15,11 @@
 * React - Frontend
 * Google Maps API - Maps
 * Travis CI - CI/CD Pipeline
+* Getting started 
+* [Install docker and docker-compose] (https://docs.docker.com/get-docker/)
+* Build the docker contanier with the command 
+'sudo docker-compose build web '
+* run the docker container with command 
+'sudo docker-compose up'
+* You you can acces your website on localhost::8000
 
