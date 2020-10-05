@@ -1,0 +1,15 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>title</title>
+    <link href="{% static 'CSUMapSite/css/main.css' %}" rel="stylesheet" type="text/css">
+  </head>
+  <body style="background-color:#c0ffee ;">
+    <div id="map">
+      <script type="text/javascript" src="{% static 'CSUMapSite/js/maps.js' %}"></script>
+      <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAhe-DDc6oPRLz3UtZcJWRJPGGkXY46w7g&callback=initMap" type="text/javascript"></script>
+    </div>
+</html>
+
