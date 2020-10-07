@@ -8,3 +8,6 @@ def index(request):
     #location = '39.730041,-121.846298'
     #loc_request = f'{api_key}&center={location}&zoom=17&maptype=satellite'
     return render(request, 'index.html')
+
+def about(request):
+	return render(request, 'about.html')
