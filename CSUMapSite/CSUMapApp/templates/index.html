@@ -12,11 +12,22 @@
 			<li><a href="{% url 'home'%}">Home</a></li>
 			<li><a href="{% url 'about'%}">About</a></li>
 		</ul>
-    <div id="map">
+        <br>
+        <br>
+        <form action="\", method = "POST">
+        {% csrf_token %}
+        {{mapForm}}
+        <input type = "submit" value="Search Building">
+        </form>
+        <input type="hidden" id="buildingName" name="variable" value="{{bn}}">
+        <br>
+        <br>
+     <div id="map">
+         <script>
+         </script>
       <script type="text/javascript" src="{% static 'CSUMapSite/js/maps.js' %}"></script>
       <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAhe-DDc6oPRLz3UtZcJWRJPGGkXY46w7g&callback=initMap" type="text/javascript"></script>
     </div>
-  <script src="https://unpkg.com/react@16/umd/react.development.js" crossorigin></script>  <script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js" crossorigin></script>
 	</body>
 </html>
 
