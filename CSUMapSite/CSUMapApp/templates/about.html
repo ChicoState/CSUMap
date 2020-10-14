@@ -5,7 +5,8 @@
 	<head>
 		<meta charset = "UTF-8">
 		<title> About </title>
-		<link rel="stylesheet" href="{% static 'CSUMapSite/css/main.css' %}">
+<link rel="stylesheet" href="/static/CSUMapSite/css/main.css?{% now "U" 
+    %}"/>
 
 
 	</head>
@@ -14,6 +15,7 @@
 			<li><a href="{% url 'home' %}">Home</a></li>
 			<li><a href="{% url 'about' %}">About</a></li>
 		</ul>
-			<p >This is a website for students to browse a map of the CSU Chico campus in order to find out where their classes are. Students can also find information about other things happening on campus such as clubs or events. </p>
+		<p class="center">This is a website for students to browse a map of the CSU Chico campus in order to find out where their classes are. Students can also find information about other things happening on campus such as clubs or events. </p>
+		<img src="/static/ChicoState.jpg" class="center">
 	</body>
 </html>
