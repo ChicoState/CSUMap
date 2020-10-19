@@ -2,6 +2,7 @@ from django.shortcuts import render
 from django.http import HttpResponse
 from . import forms 
 def index(request):
+<<<<<<< HEAD
     if request.method == "POST": 
         mapFormIns = forms.mapForm(request.POST)  
         if mapFormIns.is_valid():
@@ -17,6 +18,10 @@ def index(request):
          "bn" : buildingName
     }
     return render(request, 'index.html', context = context)
+=======
+
+    return render(request, 'index.html')
+>>>>>>> c333c3ddc4ae85017a3913267682a5b09117186d
 
 def about(request):
 	return render(request, 'about.html')

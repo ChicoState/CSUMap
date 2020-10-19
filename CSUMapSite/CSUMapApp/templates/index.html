@@ -4,10 +4,9 @@
   <head>
     <meta charset="UTF-8">
     <title>title</title>
-    <link href="{% static 'CSUMapSite/css/main.css' %}" rel="stylesheet" type="text/css">
+		<link rel="stylesheet" href="/static/CSUMapSite/css/main.css?{% now "U" %}"/>
   </head>
   <body >
-		<p> test</p>
 		<ul>
 			<li><a href="{% url 'home'%}">Home</a></li>
 			<li><a href="{% url 'about'%}">About</a></li>

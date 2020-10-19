@@ -2,7 +2,7 @@ let map;
 var buildingName = document.getElementById("buildingName").value
 function initMap() {
 	// Enable dev tool to quickly generate lat/lng coordinates
-  var debug = false;
+  var debug = true;
         map = new google.maps.Map(document.getElementById("map"), {
 		  zoom: 19,
 		  center: {
@@ -11,26 +11,66 @@ function initMap() {
 		},
 	});    
     if(buildingName == "oconnelcenter"){
-         var uluru = {lat: 39.7282356988121, lng:-121.84626878859174};
+         var uluru = {lat: 39.727369298130924, lat:-121.84770645256913};
          var map = new google.maps.Map(
          document.getElementById('map'), {zoom: 20, center: uluru});
          var marker = new google.maps.Marker({position: uluru, map: map});
     }// if 
     else if (buildingName == "langdonhall") {
-        var uluru = {lat:, 39.727487611989744, lng:-121.84768753092044};
+        var uluru = {lat:39.72745460609088,lng:-121.8476768020847};
         var map = new google.maps.Map(
         document.getElementById('map'), {zoom: 20, center: uluru});
         var marker = new google.maps.Marker({position: uluru, map: map});
     }
     else if (buildingName == "libary"|| buildingName == "meriamlibrary" ) {
-        var uluru = {lat: 39.72862918855058, lng: -121.84596509589059 };
+        var uluru = {lat:39.72828520709361, lng:-121.84621514441349};
         var map = new google.maps.Map(
         document.getElementById('map'), {zoom: 20, center: uluru});
         var marker = new google.maps.Marker({position: uluru, map: map});
     }
-    else {
-        console.log("Working");
-    }
+    else if (buildingName == "glennhall"){
+         var uluru = {lat:39.72930837028502, lng:-121.84637607694827 };
+        var map = new google.maps.Map(
+        document.getElementById('map'), {zoom: 20, center: uluru});
+        var marker = new google.maps.Marker({position: uluru, map: map});
+    } 
+    else if (buildingName == "bmu"){
+         var uluru = {lat:39.72804030063117, lng:-121.84498740813201 };
+        var map = new google.maps.Map(
+        document.getElementById('map'), {zoom: 20, center: uluru});
+        var marker = new google.maps.Marker({position: uluru, map: map});
+    } else if (buildingName == "yolohall"){
+         var uluru = {lat:39.7290000754718, lng:-121.85013821082114 };
+        var map = new google.maps.Map(
+        document.getElementById('map'), {zoom: 20, center: uluru});
+        var marker = new google.maps.Marker({position: uluru, map: map});
+    } else if (buildingName == "butehall"){
+         var uluru = {lat:39.73014521787943,lng: -121.8473929129091 };
+        var map = new google.maps.Map(
+        document.getElementById('map'), {zoom: 20, center: uluru});
+        var marker = new google.maps.Marker({position: uluru, map: map});
+    } else if (buildingName == "holthall"){
+         var uluru = {lat:39.72930837028502, lng:-121.84637607694827 };
+        var map = new google.maps.Map(
+        document.getElementById('map'), {zoom: 20, center: uluru});
+        var marker = new google.maps.Marker({position: uluru, map: map});
+    } else if (buildingName == "kendallhall"){
+         var uluru = {lat:39.72981994618649, lng:-121.84475602276474 };
+        var map = new google.maps.Map(
+        document.getElementById('map'), {zoom: 20, center: uluru});
+        var marker = new google.maps.Marker({position: uluru, map: map});
+    } else if (buildingName == "trinityhall"){
+         var uluru = {lat:39.72920110388874, lng:-121.84534610872562 };
+        var map = new google.maps.Map(
+        document.getElementById('map'), {zoom: 20, center: uluru});
+        var marker = new google.maps.Marker({position: uluru, map: map});
+    } else if (buildingName == "studentservicecenter"){
+         var uluru = {lat:39.72705986667761, lng:-121.8453622019791};
+        var map = new google.maps.Map(
+        document.getElementById('map'), {zoom: 20, center: uluru});
+        var marker = new google.maps.Marker({position: uluru, map: map});
+    } 
+    
 
     
    	// define LatLng coordinates for polygon overlay
@@ -105,33 +145,33 @@ function initMap() {
     { lat: 39.72856986889078, lng: -121.84605505223708 },
   ];
 	// construct polygon overlay
-	const oConnelOverlay = new google.maps.Polygon({
-		paths: oConnelCoords,
-		strokeColor: "#C0FFEE",
-		strokeOpacity: 0.8,
-		strokeWeight: 2,
-		fillcolor: "#BDFCEB",
-		fillOpacity: 0.35,
-	});
-	oConnelOverlay.setMap(map);
-	const langdonOverlay = new google.maps.Polygon({
-		paths: langdonCoords,
-		strokeColor: "#C0FFEE",
-		strokeOpacity: 0.8,
-		strokeWeight: 2,
-		fillcolor: "#BDFCEB",
-		fillOpacity: 0.35,
-	});
-  langdonOverlay.setMap(map);
-	const libraryOverlay = new google.maps.Polygon({
-		paths: libraryCoords,
-		strokeColor: "#C0FFEE",
-		strokeOpacity: 0.8,
-		strokeWeight: 2,
-		fillcolor: "#BDFCEB",
-		fillOpacity: 0.35,
-	});
-  libraryOverlay.setMap(map);
+//	const oConnelOverlay = new google.maps.Polygon({
+//		paths: oConnelCoords,
+//		strokeColor: "#C0FFEE",
+//		strokeOpacity: 0.8,
+//		strokeWeight: 2,
+//		fillcolor: "#BDFCEB",
+//		fillOpacity: 0.35,
+//	});
+//	oConnelOverlay.setMap(map);
+//	const langdonOverlay = new google.maps.Polygon({
+//		paths: langdonCoords,
+//		strokeColor: "#C0FFEE",
+//		strokeOpacity: 0.8,
+//		strokeWeight: 2,
+//		fillcolor: "#BDFCEB",
+//		fillOpacity: 0.35,
+//	});
+//  langdonOverlay.setMap(map);
+//	const libraryOverlay = new google.maps.Polygon({
+//		paths: libraryCoords,
+//		strokeColor: "#C0FFEE",
+//		strokeOpacity: 0.8,
+//		strokeWeight: 2,
+//		fillcolor: "#BDFCEB",
+//		fillOpacity: 0.35,
+//	});
+//  libraryOverlay.setMap(map);
 
 
 	// Create the initial InfoWindow.
