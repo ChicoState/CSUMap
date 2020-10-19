@@ -2,7 +2,7 @@ let map;
 function initMap() {
   // Enable dev tool to quickly generate lat/lng coordinates
   let debug = false;
-  let showOverlays = false;
+  let showOverlays = true;
 
   // Enable directions services
   const directionsService = new google.maps.DirectionsService();
