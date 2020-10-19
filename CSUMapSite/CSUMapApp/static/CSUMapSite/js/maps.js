@@ -11,13 +11,13 @@ function initMap() {
 		},
 	});    
     if(buildingName == "oconnelcenter"){
-         var uluru = {lat: 39.72727767251016,lng:-121.84766568984917};
+         var uluru = {lat: 39.7282356988121, lng:-121.84626878859174};
          var map = new google.maps.Map(
          document.getElementById('map'), {zoom: 20, center: uluru});
          var marker = new google.maps.Marker({position: uluru, map: map});
     }// if 
     else if (buildingName == "langdonhall") {
-        var uluru = {lat: 39.72767823770364, lng: -121.84794889964867};
+        var uluru = {lat:, 39.727487611989744, lng:-121.84768753092044};
         var map = new google.maps.Map(
         document.getElementById('map'), {zoom: 20, center: uluru});
         var marker = new google.maps.Marker({position: uluru, map: map});
