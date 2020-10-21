@@ -7,6 +7,12 @@
 		<link rel="stylesheet" href="/static/CSUMapSite/css/main.css?{% now "U" %}"/>
   </head>
   <body >
+		<div id = "sidebar" class = 'collapsed'>
+				<span> SIDEBAR </span>
+		</div>
+		<div id = "content">
+
+		<button onClick="toggle()">Toggle Sidebar</button>
 		<ul>
 			<li><a href="{% url 'home'%}">Home</a></li>
 			<li><a href="{% url 'about'%}">About</a></li>
@@ -16,6 +22,8 @@
       <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAhe-DDc6oPRLz3UtZcJWRJPGGkXY46w7g&callback=initMap" type="text/javascript"></script>
     </div>
   <script src="https://unpkg.com/react@16/umd/react.development.js" crossorigin></script>  <script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js" crossorigin></script>
+		
+		</div>
 	</body>
 </html>
 

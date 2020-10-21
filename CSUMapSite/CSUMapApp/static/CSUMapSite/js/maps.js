@@ -9,3 +9,6 @@ function initMap() {
   });
 }
 
+function toggle() {
+	document.getElementById('sidebar').classList.toggle('collapsed');
+}
