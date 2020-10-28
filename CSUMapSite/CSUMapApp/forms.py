@@ -31,11 +31,4 @@ class mapForm(forms.Form):
     buildingName = forms.ChoiceField(choices = BUILDING_LIST, 
         label = "Enter the building name",
         required = False,
-    )    
-
-    
-    
-    
-   
-
-			
+    )    			
