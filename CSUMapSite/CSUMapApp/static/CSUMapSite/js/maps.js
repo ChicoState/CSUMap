@@ -1096,4 +1096,3 @@ function calculateAndDisplayRoute(directionsService, directionsRenderer) {
     }
   );
 }
-

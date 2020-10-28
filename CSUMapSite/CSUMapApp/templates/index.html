@@ -1,21 +1,126 @@
 {% load static %}
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="UTF-8">
-    <title>title</title>
-		<link rel="stylesheet" href="/static/CSUMapSite/css/main.css?{% now "U" %}"/>
-  </head>
-  <body >
+	<head>
+		<meta charset="UTF-8">
+		<title>title</title>
+		<link href="{% static 'CSUMapSite/css/main.css' %}" rel="stylesheet" type="text/css">
+	</head>
+	<body style="background-color:#c0ffee ;">
 		<ul>
-			<li><a href="{% url 'home'%}">Home</a></li>
-			<li><a href="{% url 'about'%}">About</a></li>
+			<li><a href="{% url 'home' %}">Home</a></li>
+			<li><a href="{% url 'distanceFinder' %}">Find Walking Distance</a></li>
+			<li><a href="{% url 'search' %}">Search Buildings</a></li>
 		</ul>
-    <div id="map">
-      <script type="text/javascript" src="{% static 'CSUMapSite/js/maps.js' %}"></script>
-      <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAhe-DDc6oPRLz3UtZcJWRJPGGkXY46w7g&callback=initMap" type="text/javascript"></script>
-    </div>
-  <script src="https://unpkg.com/react@16/umd/react.development.js" crossorigin></script>  <script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js" crossorigin></script>
-	</body>
-</html>
 
+		<div id="floating-panel">
+			<b>Start: </b>
+			<select id="start">
+				<option value="39.72965383339868,-121.84362421420995">Laxson Aryes</option>
+        <option value="39.72786079343008,-121.84729082054753">O'Connel</option>
+				<option value="39.72747763926558,-121.84696559524535">Langdon</option>
+				<option value="39.728130430298755,-121.84625690300886">Merriam Library</option>
+				<option value="39.729408290689484,-121.84348322002653">Arts and Humanities</option>
+				<option value="39.72881007297421,-121.84433079807523">Performing Arts Center</option>
+				<option value="39.72863038312888,-121.8498702988007">Yolo Hall</option>
+				<option value="39.730658400597356,-121.84885337563796">Whitney Hall</option>
+				<option value="39.730348983900065,-121.84866025658889">Chico Hub</option>
+				<option value="39.73075328810629,-121.84867634984298">Sutter Hall</option>
+				<option value="39.73006225652085,-121.84837326022429">Tehama</option>
+				<option value="39.73006225652085,-121.84734597417159">Butte Hall</option>
+				<option value="39.730594454593756,-121.8474747202043">Lassen Hall</option>
+				<option value="39.73114727614851,-121.8478498395154">Shasta Hall</option>
+				<option value="39.72913615803178,-121.84636322673197">Glenn Hall</option>
+				<option value="39.729629169986254,-121.8457382720315">Colusa Hall</option>
+				<option value="39.72808325310959,-121.845107952913">Bell Memorial Union (BMU)</option>
+				<option value="39.729737639284245,-121.84605477269525">Continuing Education Center</option>
+				<option value="39.72966544121481,-121.84477535899515">Kendall</option>
+				<option value="39.730024368013574,-121.84516696151132">Selveser's Cafe</option>
+				<option value="39.729001215428426,-121.84537617381449">Trinity Hall</option>
+				<option value="39.72733418762445,-121.84587939393114">Student Services Center (SSC)</option>
+				<option value="39.73145111066418,-121.84753202886935">University Housing Office</option>
+				<option value="39.72935698981375,-121.84903633993237">Shurmer Gymnasium</option>
+				<option value="39.729608652454175,-121.84834969442456">Plumas Hall</option>
+        <option value="39.731016897747175,-121.84535178177333">Holt Hall</option>
+				<option value="39.73021098881368,-121.84950620550569">Acker Gymnasium</option>
+      </select>
+			<b>End: </b>
+			<select id="end">
+				<option value="39.72965383339868,-121.84362421420995">Laxson Aryes</option>
+        <option value="39.72786079343008,-121.84729082054753">O'Connel</option>
+				<option value="39.72747763926558,-121.84696559524535">Langdon</option>
+				<option value="39.728130430298755,-121.84625690300886">Merriam Library</option>
+				<option value="39.729408290689484,-121.84348322002653">Arts and Humanities</option>
+				<option value="39.72881007297421,-121.84433079807523">Performing Arts Center</option>
+				<option value="39.72863038312888,-121.8498702988007">Yolo Hall</option>
+				<option value="39.730658400597356,-121.84885337563796">Whitney Hall</option>
+				<option value="39.730348983900065,-121.84866025658889">Chico Hub</option>
+				<option value="39.73075328810629,-121.84867634984298">Sutter Hall</option>
+				<option value="39.73006225652085,-121.84837326022429">Tehama</option>
+				<option value="39.73006225652085,-121.84734597417159">Butte Hall</option>
+				<option value="39.730594454593756,-121.8474747202043">Lassen Hall</option>
+				<option value="39.73114727614851,-121.8478498395154">Shasta Hall</option>
+				<option value="39.72913615803178,-121.84636322673197">Glenn Hall</option>
+				<option value="39.729629169986254,-121.8457382720315">Colusa Hall</option>
+				<option value="39.72808325310959,-121.845107952913">Bell Memorial Union (BMU)</option>
+				<option value="39.729737639284245,-121.84605477269525">Continuing Education Center</option>
+				<option value="39.72966544121481,-121.84477535899515">Kendall</option>
+				<option value="39.730024368013574,-121.84516696151132">Selveser's Cafe</option>
+				<option value="39.729001215428426,-121.84537617381449">Trinity Hall</option>
+				<option value="39.72733418762445,-121.84587939393114">Student Services Center (SSC)</option>
+				<option value="39.73145111066418,-121.84753202886935">University Housing Office</option>
+				<option value="39.72935698981375,-121.84903633993237">Shurmer Gymnasium</option>
+				<option value="39.729608652454175,-121.84834969442456">Plumas Hall</option>
+        <option value="39.731016897747175,-121.84535178177333">Holt Hall</option>
+				<option value="39.73021098881368,-121.84950620550569">Acker Gymnasium</option>
+			</select>
+		</div>
+		<div id="map">
+			<script type="text/javascript" src="{% static 'CSUMapSite/js/maps.js' %}"></script>
+			<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAhe-DDc6oPRLz3UtZcJWRJPGGkXY46w7g&callback=initMap" type="text/javascript"></script>
+		</div>
+        <div id="floating-panel2">
+			<b>Start: </b>
+			<select id="Search"> 
+				<option value="39.72965383339868,-121.84362421420995">Laxson Aryes</option>
+        <option value="39.72786079343008,-121.84729082054753">O'Connel</option>
+				<option value="39.72747763926558,-121.84696559524535">Langdon</option>
+				<option value="39.728130430298755,-121.84625690300886">Merriam Library</option>
+				<option value="39.729408290689484,-121.84348322002653">Arts and Humanities</option>
+				<option value="39.72881007297421,-121.84433079807523">Performing Arts Center</option>
+				<option value="39.72863038312888,-121.8498702988007">Yolo Hall</option>
+				<option value="39.730658400597356,-121.84885337563796">Whitney Hall</option>
+				<option value="39.730348983900065,-121.84866025658889">Chico Hub</option>
+				<option value="39.73075328810629,-121.84867634984298">Sutter Hall</option>
+				<option value="39.73006225652085,-121.84837326022429">Tehama</option>
+				<option value="39.73006225652085,-121.84734597417159">Butte Hall</option>
+				<option value="39.730594454593756,-121.8474747202043">Lassen Hall</option>
+				<option value="39.73114727614851,-121.8478498395154">Shasta Hall</option>
+				<option value="39.72913615803178,-121.84636322673197">Glenn Hall</option>
+				<option value="39.729629169986254,-121.8457382720315">Colusa Hall</option>
+				<option value="39.72808325310959,-121.845107952913">Bell Memorial Union (BMU)</option>
+				<option value="39.729737639284245,-121.84605477269525">Continuing Education Center</option>
+				<option value="39.72966544121481,-121.84477535899515">Kendall</option>
+				<option value="39.730024368013574,-121.84516696151132">Selveser's Cafe</option>
+				<option value="39.729001215428426,-121.84537617381449">Trinity Hall</option>
+				<option value="39.72733418762445,-121.84587939393114">Student Services Center (SSC)</option>
+				<option value="39.73145111066418,-121.84753202886935">University Housing Office</option>
+				<option value="39.72935698981375,-121.84903633993237">Shurmer Gymnasium</option>
+				<option value="39.729608652454175,-121.84834969442456">Plumas Hall</option>
+        <option value="39.731016897747175,-121.84535178177333">Holt Hall</option>
+				<option value="39.73021098881368,-121.84950620550569">Acker Gymnasium</option>
+      </select>
+      </div>
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+</html>

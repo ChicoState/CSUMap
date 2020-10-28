@@ -1,0 +1,33 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>title</title>
+		<link rel="stylesheet" href="/static/CSUMapSite/css/main.css?{% now "U" %}"/>
+  </head>~~
+  <body >
+    <ul>
+        <li><a href="{% url 'home' %}">Home</a></li>
+        <li><a href="{% url 'distanceFinder' %}">Finding Walking distanceFinder</a></li>
+        <li><a href="{% url 'search' %}">Search Buildings </a></li>
+    </ul>
+    <form action="\", method = "POST">
+        {% csrf_token %}
+        {{formIns}}
+        <input type = "submit" value="Search Building">
+     </form>
+     <script type="text/javascript"> 
+        var bnlat = "{{bnlat}}";
+        var bnlng = "{{bnlng}}";       
+     </script>
+    <div id="map">
+      <script type="text/javascript" src="{% static 'CSUMapSite/js/search.js' %}"></script>
+      <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAhe-DDc6oPRLz3UtZcJWRJPGGkXY46w7g&callback=initMap" type="text/javascript"></script>
+    </div>
+  <script src="https://unpkg.com/react@16/umd/react.development.js" crossorigin></script>  <script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js" crossorigin></script>
+ <div id="map">
+
+
+    </body>
+</html>
