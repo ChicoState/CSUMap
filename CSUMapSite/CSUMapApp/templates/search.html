@@ -12,7 +12,7 @@
         <li><a href="{% url 'distanceFinder' %}">Finding Walking distanceFinder</a></li>
         <li><a href="{% url 'search' %}">Search Buildings </a></li>
     </ul>
-    <form action="\search", method = "POST">
+    <form action="\", method = "POST">
         {% csrf_token %}
         {{formIns}}
         <input type = "submit" value="Search Building">
