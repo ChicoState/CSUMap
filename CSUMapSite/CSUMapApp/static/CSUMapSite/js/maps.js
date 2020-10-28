@@ -1,13 +1,5 @@
 let map;
 function initMap() {
-  // Enable dev tool to quickly generate lat/lng coordinates
-  let debug = false;
-  let showOverlays = true;
-
-  // Enable directions services
-  const directionsService = new google.maps.DirectionsService();
-  const directionsRenderer = new google.maps.DirectionsRenderer();
-
   // initialize map
   map = new google.maps.Map(document.getElementById("map"), {
     zoom: 17,
@@ -16,7 +8,121 @@ function initMap() {
       lng: -121.846298
     },
   });
+
+  // Enable dev tool to quickly generate lat/lng coordinates
+  let debug = true;
+  let showOverlays = false;
+
+  // Enable directions services
+  const directionsService = new google.maps.DirectionsService();
+  const directionsRenderer = new google.maps.DirectionsRenderer();
   directionsRenderer.setMap(map);
+
+  // Hide business points of interest
+  const styles = {
+    default: [],
+    hide: [
+      {
+        featureType: "poi.business",
+        stylers: [{ visibility: "off" }],
+      },
+      {
+        featureType: "transit",
+        elementType: "labels.icon",
+        stylers: [{ visibility: "off" }],
+      },
+    ],
+  };
+  map.setOptions({styles: styles["hide"] });
+
+  // define LatLng coordinates and content strings for chico off-campus activities
+  const iconBase = "static/CSUMapSite/images/";
+  const icons = {
+    theBear: {
+      icon: iconBase + "theBear.jpg",
+    },
+  };
+
+  const activities = [
+    {
+      // Madison Bear Garden
+      position: new google.maps.LatLng(39.72908744561082, -121.84257874434344),
+      icon: iconBase + "theBear.png",
+      content: "Hey it's the bear",
+      type: "info",
+    },
+    {
+      // Mom's
+      position: new google.maps.LatLng(39.72905085281284,-121.84180261769104),
+      icon: iconBase + "moms.png",
+      content: "Hey it's Moms",
+      type: "info",
+    },
+    {
+      // WREC
+      position: new google.maps.LatLng(39.725857531251485,-121.84773566403199),
+      icon: iconBase + "wrec.png",
+      content: "Hey it's the wrec",
+      type: "info",
+    },
+    {
+      // Rileys
+      position: new google.maps.LatLng(39.724504402533135,-121.84393239443595),
+      icon: iconBase + "rileys.png",
+      content: "Hey it's Rileys",
+      type: "info",
+    },
+    {
+      // Parkside Tap House
+      position: new google.maps.LatLng(39.72932266646227,-121.8396369451841),
+      icon: iconBase + "parkside.png",
+      content: "Hey it's Parkside",
+      type: "info",
+    },
+    {
+      // WellCat Chico State Clinic
+      position: new google.maps.LatLng(39.73084552785969,-121.85026787350711),
+      icon: iconBase + "wellcat.png",
+      content: "Hey it's wellcat",
+      type: "info",
+    },
+    {
+      // Parkside Tap House
+      position: new google.maps.LatLng(39.730913599161944,-121.83858148882922),
+      icon: iconBase + "farmersMarket.png",
+      content: "Hey it's the farmers market",
+      type: "info",
+    },
+    {
+      // Burgers and Brew
+      position: new google.maps.LatLng(39.72895754753778,-121.84012510722481),
+      icon: iconBase + "burgersAndBrew.png",
+      content: "Hey it's Burgers and Brew",
+      type: "info",
+    },
+    {
+      // Town center
+      position: new google.maps.LatLng(39.72821746790875,-121.83887364544678),
+      icon: iconBase + "townCenter.png",
+      content: "Hey it's the town center",
+      type: "info",
+    },
+  ]
+
+  for (let i = 0; i < activities.length; i++) {
+    const marker = new google.maps.Marker({
+      position: activities[i].position,
+      icon: activities[i].icon,
+      map: map,
+    });
+    const infowindow = new google.maps.InfoWindow( {
+      content: activities[i].content,
+    });
+    marker.addListener("click", () => {
+      infowindow.open(map, marker);
+    });
+  }
+
   // define LatLng coordinates for polygon overlay
   const laxsonAyresCoords = [
     { lat: 39.7296952586545, lng: -121.84379068088681 },
@@ -1046,8 +1152,8 @@ function initMap() {
   const onChangeHandler = function () {
     calculateAndDisplayRoute(directionsService, directionsRenderer);
   };
-  document.getElementById("start").addEventListener("change", onChangeHandler);
-  document.getElementById("end").addEventListener("change", onChangeHandler);
+  //document.getElementById("start").addEventListener("change", onChangeHandler);
+  //document.getElementById("end").addEventListener("change", onChangeHandler);
 
   // Create the initial InfoWindow.
   if(debug) {
@@ -1064,7 +1170,7 @@ function initMap() {
 
       // Create a new InfoWindow.
       infoWindow = new google.maps.InfoWindow({position: mapsMouseEvent.latLng});
-      //message += "{ lat: " + mapsMouseEvent.latLng.lat().toString() + ", lng: " + mapsMouseEvent.latLng.lng().toString() + " },<br \>";
+      //message += "{ lat: " + mapsMouseEvent.latLng.lat().toString() + ", lng: " + mapsMouseEvent.latLng.lng().toString() + " };<br \>";
       message += mapsMouseEvent.latLng.lat().toString() + "," +  mapsMouseEvent.latLng.lng().toString() + "<br \>";
       infoWindow.setContent(message);
       infoWindow.open(map);
