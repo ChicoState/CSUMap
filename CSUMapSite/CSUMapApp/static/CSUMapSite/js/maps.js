@@ -48,56 +48,56 @@ function initMap() {
       // Madison Bear Garden
       position: new google.maps.LatLng(39.72908744561082, -121.84257874434344),
       icon: iconBase + "theBear.png",
-      content: "Hey it's the bear",
+      content: "If you haven’t been here yet, there’s no doubt that you’ve heard of Chico’s legendary Madison Bear Garden - more commonly known as “The Bear”. This is where all of the action happens in our lovely little town of Chico. Practically connected to Chico State’s campus, The Bear has some of the best deals in town! Stop by any day of the week to find out for yourself!",
       type: "info",
     },
     {
       // Mom's
       position: new google.maps.LatLng(39.72905085281284,-121.84180261769104),
       icon: iconBase + "moms.png",
-      content: "Hey it's Moms",
+      content: "Directly across the street from Madison Bear Garden is home of the best breakfast in town: Mom’s Restaurant. Mom’s is the perfect place to visit when you’re craving that greasy, All American Breakfast on Sunday morning after a long night, or when your parents are in town visiting their favorite Chico State student! Open from 7:00 AM to 1:00 PM, seven days a week!",
       type: "info",
     },
     {
       // WREC
       position: new google.maps.LatLng(39.725857531251485,-121.84773566403199),
       icon: iconBase + "wrec.png",
-      content: "Hey it's the wrec",
+      content: "It’s no secret that Chico is filled with great food (The Bear, Mom’s, Parkside, etc.). But, where do you go when you’re feeling like you want to work a little bit of all that goodness off? The WREC! More formally known as the Chico State Wildcat Recreational Facility, the WREC is a great place to work off some steam, hang out with friends by the pool, take a yoga class or meet some new people! Included in your tuition, the WREC is a wonderful facility that all students should take advantage of while they’re attending Chico State.",
       type: "info",
     },
     {
       // Rileys
       position: new google.maps.LatLng(39.724504402533135,-121.84393239443595),
       icon: iconBase + "rileys.png",
-      content: "Hey it's Rileys",
+      content: "Have you ever heard a “crazy party” story about Chico State? Have your parent’s friends’ ever talked about their “wild glory days” here in Northern California? Well, Riley’s is where it all started. Riley’s Bar and Grill started partying back in 1986, and have been going ever since! With Pitchers and Sunday Funday going on weekly, you’ll have to stop by after you finish up your homework and see the legend for itself!",
       type: "info",
     },
     {
       // Parkside Tap House
       position: new google.maps.LatLng(39.72932266646227,-121.8396369451841),
       icon: iconBase + "parkside.png",
-      content: "Hey it's Parkside",
+      content: "Looking for a quick bite in between classes? Or, even better, a few beers with your peers after the day is done? Look no further! Parkside Tap House offers high quality meals made from locally sourced ingredients and a stellar on-tap beer selection. Payday can’t come soon enough? Stop by Parkside to hang out on their patio and play a round of cornhole! Yes - for free!",
       type: "info",
     },
     {
       // WellCat Chico State Clinic
       position: new google.maps.LatLng(39.73084552785969,-121.85026787350711),
       icon: iconBase + "wellcat.png",
-      content: "Hey it's wellcat",
+      content: "Approaching flu season and want to play it safe this year with a flu shot? Don’t bother going to the drugstore down the street - check yourself into the WellCat Chico State Clinic, right here on campus! With friendly staff and students just like yourself, the WellCat Chico State Clinic is your one-stop-shop for all health-related concerns: allergies, standard health screenings, birth control and more!",
       type: "info",
     },
     {
-      // Parkside Tap House
+      // Farmers Market
       position: new google.maps.LatLng(39.730913599161944,-121.83858148882922),
       icon: iconBase + "farmersMarket.png",
-      content: "Hey it's the farmers market",
+      content: "Are you an early riser? Well, even if you’re not, the Chico Farmers Market runs well into the afternoon! During the warmer months, the town puts on a Thursday evening market filled with local vendors selling their fresh harvest, local businesses who want to make a couple extra dollars and some great food-truck eats. If you’re a foodie, this is the spot for you! Year-round, Chico hosts a weekly Saturday Farmers Market that’s jam-packed with local produce and live music. Both are a treat to attend!",
       type: "info",
     },
     {
       // Burgers and Brew
       position: new google.maps.LatLng(39.72895754753778,-121.84012510722481),
       icon: iconBase + "burgersAndBrew.png",
-      content: "Hey it's Burgers and Brew",
+      content: "In the heart of Downtown Chico is some of the best burgers you can get your hands on (aside from The Bear, of course). Burgers and Brew is not only known for their mouthwatering burger selection, but for their craft-beer on-tap that’s on rotation, seasonally. If you’re a beer connoisseur, you’ve got to get down here! At the very least, you need to check out their Breakfast Fries. Yes, it’s everything that you’re imagining… and more!",
       type: "info",
     },
     {
