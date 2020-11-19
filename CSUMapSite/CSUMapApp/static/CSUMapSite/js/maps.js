@@ -977,6 +977,7 @@ function initMap() {
 
   // construct polygon overlay
 
+  map.setOptions({draggableCursor:'default'});
   const boundaryOverlay = new google.maps.Polygon({
     paths: [ChicoCampusCoords],
     strokeColor: "#FBFBFF",
@@ -984,6 +985,7 @@ function initMap() {
     strokeWeight: 2,
     fillcolor: "#BFBFBF",
     fillOpacity: 0.07,
+    clickable:false
   });
   boundaryOverlay.setMap(map);
 
