@@ -937,36 +937,39 @@ function initMap() {
   // construct polygon overlay
 
   for (let i = 0; i < overlayCoords.length; i++) {
+    paths = [];
     if(overlayCoords[i][0].lat < 0 && Number.isInteger(overlayCoords[i][0].lat)) {
       innerPaths = [];
       for(let j = 0; j < Math.abs(overlayCoords[i][0].lat); j++) {
         innerPaths.push(overlayCoords[i+j]);
       }
-      const overlay = new google.maps.Polygon({
-        //TODO
-        paths: [overlayCoords[i+Math.abs(overlayCoords[i][0].lat)], innerPaths[0].slice(1)],
-        strokeColor: "#C0FFEE",
-        strokeOpacity: 0.8,
-        strokeWeight: 2,
-        fillcolor: "#BDFCEB",
-        fillOpacity: 0.35,
-      });
-      if(showOverlays) {
-        overlay.setMap(map);
-      }
+      //TODO
+      _paths = [overlayCoords[i+Math.abs(overlayCoords[i][0].lat)], innerPaths[0].slice(1)];
       i++;
     } else {
-      const overlay = new google.maps.Polygon({
-        paths: overlayCoords[i],
-        strokeColor: "#C0FFEE",
-        strokeOpacity: 0.8,
-        strokeWeight: 2,
-        fillcolor: "#BDFCEB",
-        fillOpacity: 0.35,
+      _paths = [overlayCoords[i]];
+    }
+    const overlay = new google.maps.Polygon({
+      paths: _paths,
+      strokeColor: "#C0FFEE",
+      strokeOpacity: 0,
+      strokeWeight: 2,
+      fillcolor: "#BDFCEB",
+      fillOpacity: 0,
+    });
+    if(showOverlays) {
+      overlay.setMap(map);
+      google.maps.event.addDomListener(overlay, 'mouseover', function(){
+        overlay.setOptions({fillOpacity:0.35});
+        overlay.setOptions({strokeOpacity:0.8});
       });
-      if(showOverlays) {
-        overlay.setMap(map);
-      }
+      google.maps.event.addDomListener(overlay, 'mouseout', function(){
+        overlay.setOptions({fillOpacity:0});
+        overlay.setOptions({strokeOpacity:0});
+      });
+      google.maps.event.addDomListener(overlay, 'mousedown', function(){
+        alert("You've clicked me!");
+      });
     }
   }
 
