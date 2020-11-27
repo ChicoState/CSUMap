@@ -10,7 +10,7 @@ function initMap() {
   });
 
   // Enable dev tool to quickly generate lat/lng coordinates
-  let debug = true;
+  let debug = false;
   let showOverlays = true;
 
   // Enable directions services
@@ -108,50 +108,6 @@ function initMap() {
       type: "info",
     },
     // Entries below this line are CSU Chico clickable buildings
-    /*
-    {
-      // University housing
-      position: new google.maps.LatLng(39.731460186168704,-121.84754790940094),
-      icon: iconBase + "campusLogo.png",
-      content: "Hey it's the town center",
-      type: "info",
-    },
-    {
-      // Shasta
-      position: new google.maps.LatLng(39.73117657764554,-121.84785783290863),
-      icon: iconBase + "campusLogo.png",
-      content: "Hey it's the town center",
-      type: "info",
-    },
-    {
-      // Holt Hall
-      position: new google.maps.LatLng(39.731048686540326,-121.84534728527069),
-      icon: iconBase + "campusLogo.png",
-      content: "Hey it's the town center",
-      type: "info",
-    },
-    {
-      // Lassen
-      position: new google.maps.LatLng(39.7306268303896,-121.84745671429444),
-      icon: iconBase + "campusLogo.png",
-      content: "Hey it's the town center",
-      type: "info",
-    },
-    {
-      // Sutter
-      position: new google.maps.LatLng(39.73068458804573,-121.8484759537201),
-      icon: iconBase + "campusLogo.png",
-      content: "Hey it's the town center",
-      type: "info",
-    },
-    {
-      // Whitney
-      position: new google.maps.LatLng(39.730560821580504,-121.84909822621155),
-      icon: iconBase + "campusLogo.png",
-      content: "Hey it's the town center",
-      type: "info",
-    },
-    */
   ]
 
   for (let i = 0; i < activities.length; i++) {
