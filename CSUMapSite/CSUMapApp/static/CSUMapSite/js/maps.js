@@ -1074,6 +1074,45 @@ function initMap() {
     });
 
   }
+<<<<<<< HEAD
+=======
+}
+
+function calculateAndDisplayRoute(directionsService, directionsRenderer) {
+  directionsService.route(
+    {
+      origin: {
+        query: document.getElementById("start").value,
+      },
+      destination: {
+        query: document.getElementById("end").value,
+      },
+      travelMode: google.maps.TravelMode.WALKING,
+    },
+    (response, status) => {
+      if (status === "OK") {
+        directionsRenderer.setDirections(response);
+      } else {
+        window.alert("Directions request failed due to " + status);
+      }
+    }
+  );
+}
+
+function toggle() {
+	document.getElementById('sidebar').classList.toggle('collapsed');
+}
+
+function clubToggle() {
+	var coll = document.getElementById("club-content");
+	coll.classList.toggle("active");
+	if(coll.style.display == "none") {
+		coll.style.display = "block";
+	}
+	else {	
+		coll.style.display = "none";
+	}
+>>>>>>> sideBar
 }
 
 function calculateAndDisplayRoute(directionsService, directionsRenderer) {
