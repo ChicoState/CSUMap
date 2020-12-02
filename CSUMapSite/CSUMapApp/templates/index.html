@@ -1,14 +1,6 @@
 {% load static %}
 <!DOCTYPE html>
 <html>
-<<<<<<< HEAD
-	<head>
-		<meta charset="UTF-8">
-		<title>title</title>
-		<link href="{% static 'CSUMapSite/css/main.css' %}" rel="stylesheet" type="text/css">
-	</head>
-	<body style="background-color:#c0ffee ;">
-=======
   <head>
     <meta charset="UTF-8">
     <title>title</title>
@@ -20,32 +12,28 @@
 				<p id = "text" class = "center">  {{buildings.buildingName}} </p>
 				<a href = "https://www.csuchico.edu/aaspace/commonspaces/ocnl/index.shtml" id = "text2" class = "center">Layout & Room Photos</a>
 				<button onClick = "clubToggle()" type="button" id = "collapsible"> Clubs </button>
-				<div id = "club-content"> 
+				<div id = "club-content">
 					<p id = "text2" class = "center"> {{buildings.clubs}} </p>
 				</div>
-	
+
 		</div>
 		<div id = "content">
 
 		<button onClick="toggle()">Toggle Sidebar</button>
->>>>>>> sideBar
 		<ul>
 			<li><a href="{% url 'home' %}">Home</a></li>
 			<li><a href="{% url 'distanceFinder' %}">Find Walking Distance</a></li>
 			<li><a href="{% url 'search' %}">Search Buildings</a></li>
 		</ul>
-<<<<<<< HEAD
-=======
     <div id="map">
       <script type="text/javascript" src="{% static 'CSUMapSite/js/maps.js' %}"></script>
       <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAhe-DDc6oPRLz3UtZcJWRJPGGkXY46w7g&callback=initMap" type="text/javascript"></script>
     </div>
   <script src="https://unpkg.com/react@16/umd/react.development.js" crossorigin></script>  <script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js" crossorigin></script>
-		
+
 		</div>
 	</body>
 </html>
->>>>>>> sideBar
 
 		<div id="floating-panel">
 			<b>Start: </b>
@@ -115,7 +103,7 @@
 		</div>
         <div id="floating-panel2">
 			<b>Start: </b>
-			<select id="Search"> 
+			<select id="Search">
 				<option value="39.72965383339868,-121.84362421420995">Laxson Aryes</option>
         <option value="39.72786079343008,-121.84729082054753">O'Connel</option>
 				<option value="39.72747763926558,-121.84696559524535">Langdon</option>
@@ -145,16 +133,16 @@
 				<option value="39.73021098881368,-121.84950620550569">Acker Gymnasium</option>
       </select>
       </div>
+
+
+
+
+
+
+
         
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
+
+
+
+
 </html>
