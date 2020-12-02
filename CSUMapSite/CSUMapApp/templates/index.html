@@ -8,13 +8,14 @@
   </head>
   <body >
 		<div id = "sidebar" class = 'collapsed'>
-				<p id = "text" class = "center">  O'Connell Center </p>
+
+				<p id = "text" class = "center">  {{buildings.buildingName}} </p>
 				<a href = "https://www.csuchico.edu/aaspace/commonspaces/ocnl/index.shtml" id = "text2" class = "center">Layout & Room Photos</a>
 				<button onClick = "clubToggle()" type="button" id = "collapsible"> Clubs </button>
 				<div id = "club-content"> 
-					<p id = "text2" class = "center"> CLUBS HERE </p>
+					<p id = "text2" class = "center"> {{buildings.clubs}} </p>
 				</div>
-
+	
 		</div>
 		<div id = "content">
 
