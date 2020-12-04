@@ -1,4 +1,3 @@
-let map;
 function initMap() {
   // initialize map
   map = new google.maps.Map(document.getElementById("map"), {
