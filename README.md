@@ -22,4 +22,9 @@
 * run the docker container with command 
 ```sudo docker-compose up```
 * You you can acces your website on localhost::8000
+## Using Docker Compose 
+* You can run the docker contanier with the command 
+```sudo docker-compose up ```
+* You can run the docker contanier as a bash shell with the command 
+```sudo docker-compose run web /bin/bash ```
 

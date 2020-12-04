@@ -5,17 +5,26 @@
 	<head>
 		<meta charset = "UTF-8">
 		<title> About </title>
-<link rel="stylesheet" href="/static/CSUMapSite/css/main.css?{% now "U" 
-    %}"/>
-
-
+		<link rel="stylesheet" href="/static/CSUMapSite/css/main.css?{% now "U" %}"/>
+		<link rel="stylesheet" href="/static/CSUMapSite/css/main.css?{% now "U" %}"/>
 	</head>
 	<body>
 		<ul>
 			<li><a href="{% url 'home' %}">Home</a></li>
-			<li><a href="{% url 'about' %}">About</a></li>
+			<li><a href="{% url 'distanceFinder' %}">Find Walking Distance</a></li>
+			<li><a href="{% url 'search' %}">Search Buildings</a></li>
 		</ul>
-		<p class="center">This is a website for students to browse a map of the CSU Chico campus in order to find out where their classes are. Students can also find information about other things happening on campus such as clubs or events. </p>
+		<p class="center">This is a website for students to browse a map of the CSU Chico campus in order to find out 
+			where their classes are. Students can also find information about other things happening on 
+			campus such as clubs or events. </p>
+
+		<P class = "center">
+			The users can currently use from the flowing fectures <br>
+			1. They can search for a particular building. <br>
+			2. They can see the walking distance between two building. <br>
+			To use the website chose the option you would like from the top navigation bar <br>
+
+		</p>	
 		<img src="/static/ChicoState.jpg" class="center">
 	</body>
 </html>
