@@ -10,6 +10,9 @@ var parkingBounds;
 let wifiOverlays = [];
 var wifiBounds;
 
+let bathroomPoints = [];
+var bathroomBounds;
+
 function initMap() {
   // initialize map
   map = new google.maps.Map(document.getElementById("map"), {
@@ -118,17 +121,17 @@ position: new google.maps.LatLng(39.72821746790875,-121.83887364544678),
 
   for (let i = 0; i < activities.length; i++) {
     const marker = new google.maps.Marker({
-position: activities[i].position,
-icon: activities[i].icon,
-map: map,
-});
-const infowindow = new google.maps.InfoWindow( {
-content: activities[i].content,
-});
-marker.addListener("click", () => {
-    //toggle();
-    infowindow.open(map, marker);
+      position: activities[i].position,
+      icon: activities[i].icon,
+      map: map,
     });
+    const infowindow = new google.maps.InfoWindow( {
+    content: activities[i].content,
+    });
+  marker.addListener("click", () => {
+  //toggle();
+  infowindow.open(map, marker);
+  });
 }
 
 const parkingCoords = [
@@ -496,6 +499,28 @@ const parkingCoords = [
     ],
     ]
 
+// NOTE: demo data, this is not accurate information TODO
+bathroomCoords = [
+  { lat: 39.727793260680244, lng: -121.84779722583998 },
+  { lat: 39.727250726607274, lng: -121.84736002577056 },
+  { lat: 39.727974792040406, lng: -121.84652317655791 },
+  { lat: 39.72744257374454, lng: -121.84569973839034 },
+  { lat: 39.72721978347061, lng: -121.8461262096237 },
+  { lat: 39.72799542057381, lng: -121.84498090637435 },
+  { lat: 39.72888473692402, lng: -121.84555143613478 },
+  { lat: 39.72907451669378, lng: -121.84655726451537 },
+  { lat: 39.729213502601745, lng: -121.84908627509719 },
+  { lat: 39.729793151625735, lng: -121.84958516597396 },
+  { lat: 39.72936202523599, lng: -121.84830441116935 },
+  { lat: 39.729982606583356, lng: -121.8485109412635 },
+  { lat: 39.73014350429435, lng: -121.84723957419044 },
+  { lat: 39.73095417551031, lng: -121.84555112361556 },
+  { lat: 39.73114394958334, lng: -121.84510051250106 },
+  { lat: 39.730483863599446, lng: -121.84367625951415 },
+  { lat: 39.72993103672472, lng: -121.84357433557159 },
+  { lat: 39.72979489211256, lng: -121.84462576150543 },
+  { lat: 39.72875110782062, lng: -121.84394448041564 },
+]
     // define LatLng coordinates for polygon overlay
     const overlayCoords = [
       [
@@ -1337,31 +1362,48 @@ clickable:false
     parkingOverlays[i].setMap(map);
   }
 
-// Map will center around these points once an additional overlay is selected
-parkingBounds.extend(parkingCoords[i][1]);
-}
-
-// construct overlays for wifi coverage
-wifiBounds = new google.maps.LatLngBounds();
-for (let i = 0; i < wifiCoords.length; i++) {
-  paths = wifiCoords[i].slice(2);
-  wifiOverlays.push(new google.maps.Polygon({
-paths: paths,
-strokeColor: "#C0FFEE",
-strokeOpacity: .0,
-strokeWeight: 4,
-fillcolor: "#BDFCEB",
-fillOpacity: .0,
-clickable:false
-})
-      );
-  if(showOverlays) {
-    wifiOverlays[i].setMap(map);
+  // Map will center around these points once an additional overlay is selected
+  parkingBounds.extend(parkingCoords[i][1]);
   }
 
-// Map will center around these points once an additional overlay is selected
-wifiBounds.extend(wifiCoords[i][1]);
-}
+  // construct overlays for wifi coverage
+  wifiBounds = new google.maps.LatLngBounds();
+  for (let i = 0; i < wifiCoords.length; i++) {
+    paths = wifiCoords[i].slice(2);
+    wifiOverlays.push(new google.maps.Polygon({
+      paths: paths,
+      strokeColor: "#C0FFEE",
+      strokeOpacity: .0,
+      strokeWeight: 4,
+      fillcolor: "#BDFCEB",
+      fillOpacity: .0,
+      clickable:false
+      })
+    );
+    if(showOverlays) {
+      wifiOverlays[i].setMap(map);
+    }
+    // Map will center around these points once an additional overlay is selected
+    wifiBounds.extend(wifiCoords[i][1]);
+  }
+
+  // construct overlays for wifi coverage
+  bathroomBounds = new google.maps.LatLngBounds();
+  for (let i = 0; i < bathroomCoords.length; i++) {
+    bathroomPoints.push(new google.maps.Marker({
+        position: bathroomCoords[i],
+        map: map,
+      })
+    );
+    bathroomPoints[i].setVisible(false);
+    if(showOverlays) {
+      bathroomPoints[i].setMap(map);
+    }
+
+    // Map will center around these points once an additional overlay is selected
+    bathroomBounds.extend(bathroomCoords[i]);
+  }
+
 // construct overlays for campus buildings
 for (let i = 0; i < overlayCoords.length; i++) {
   paths = [];
@@ -1436,8 +1478,7 @@ const onChangeHandler = function () {
 }
 
 function calculateAndDisplayRoute(directionsService, directionsRenderer) {
-  directionsService.route(
-      {
+  directionsService.route({
 origin: {
 query: document.getElementById("start").value,
 },
@@ -1491,6 +1532,21 @@ function toggleWifiCoverageOverlays() {
   wifiCoverageEnabled = !wifiCoverageEnabled;
 }
 
+let bathroomPointsEnabled = false;
+function toggleBathroomPoints() {
+  if(!bathroomPointsEnabled) {
+    for(let i = 0; i < bathroomPoints.length; i++) {
+      bathroomPoints[i].setVisible(true);
+    }
+    map.fitBounds(bathroomBounds);
+  } else {
+    for(let i = 0; i < bathroomPoints.length; i++) {
+      bathroomPoints[i].setVisible(false);
+    }
+  }
+  bathroomPointsEnabled = !bathroomPointsEnabled;
+}
+
 function toggle() {
   document.getElementById('sidebar').classList.toggle('collapsed');
 }
@@ -1505,4 +1561,5 @@ function clubToggle() {
     coll.style.display = "none";
   }
 }
+
 
