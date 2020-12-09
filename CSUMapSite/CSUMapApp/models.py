@@ -13,6 +13,7 @@ class Building(models.Model):
 	clubs =    models.TextField()
 #	cordinates = models.ForeignKey(buildingCordinates)
 	buildingDesc =  models.TextField()
+	bUrl = models.TextField()
 	def __str__(self):
 		return self.buildingName
 

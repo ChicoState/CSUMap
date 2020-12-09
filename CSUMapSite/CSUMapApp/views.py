@@ -30,16 +30,19 @@ def search(request):
                 bLat = ""
                 bLng = ""
                 bname = request.POST['buildingName']
+                buildings = ""
         else:
             mapFormIns = forms.mapForm()
             bLat = ""
             bLng = ""
             bname = "No name 2"
+            buildings = ""
     else:
         mapFormIns = forms.mapForm()
         bLat = ""
         bLng = ""
         bname = "No name 3"
+        buildings = ""
     context ={
          "bnlat" : bLat,
          "bnlng" : bLng,
