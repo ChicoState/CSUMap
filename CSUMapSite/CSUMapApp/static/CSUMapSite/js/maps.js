@@ -1,5 +1,5 @@
 // Enable dev tool to quickly generate lat/lng coordinates?
-let debug = true;
+let debug = false;
 
 // Show building overlays?
 let showOverlays = true;
