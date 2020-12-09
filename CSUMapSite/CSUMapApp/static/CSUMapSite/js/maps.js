@@ -1,3 +1,12 @@
+// Enable dev tool to quickly generate lat/lng coordinates?
+let debug = false;
+
+// Show building overlays?
+let showOverlays = true;
+
+let parkingOverlays = [];
+var bounds;
+
 function initMap() {
   // initialize map
   map = new google.maps.Map(document.getElementById("map"), {
@@ -7,12 +16,6 @@ function initMap() {
       lng: -121.846298
     },
   });
-
-  // Enable dev tool to quickly generate lat/lng coordinates?
-  let debug = true;
-
-  // Show building overlays?
-  let showOverlays = true;
 
   // Enable directions services
   const directionsService = new google.maps.DirectionsService();
@@ -973,31 +976,26 @@ function initMap() {
     clickable:false
   });
 
-  var bounds = new google.maps.LatLngBounds();
   // construct overlays for parking lots
+  bounds = new google.maps.LatLngBounds();
   for (let i = 0; i < parkingCoords.length; i++) {
     paths = parkingCoords[i].slice(2);
-    const overlay = new google.maps.Polygon({
-      paths: paths,
-      strokeColor: "#69202e",
-      strokeOpacity: .8,
-      strokeWeight: 2,
-      fillcolor: "#BDFCEB",
-      fillOpacity: .3,
-    });
+    parkingOverlays.push(new google.maps.Polygon({
+        paths: paths,
+        strokeColor: "#f08b1f",
+        strokeOpacity: .0,
+        strokeWeight: 4,
+        fillcolor: "#BDFCEB",
+        fillOpacity: .0,
+      })
+    );
     if(showOverlays) {
-      overlay.setMap(map);
+      parkingOverlays[i].setMap(map);
     }
-    // set markers
-    var marker = new google.maps.Marker({
-      position: parkingCoords[i][1],
-      map,
-      title: parkingCoords[i][0].name,
-    });
-    bounds.extend(marker.position);
-  }
-  map.fitBounds(bounds);
 
+    // Map will center around these points once an additional overlay is selected
+    bounds.extend(parkingCoords[i][1]);
+  }
   // construct overlays for campus buildings
   for (let i = 0; i < overlayCoords.length; i++) {
     paths = [];
@@ -1014,7 +1012,7 @@ function initMap() {
     }
     const overlay = new google.maps.Polygon({
       paths: _paths,
-      strokeColor: "#69202e",
+      strokeColor: "#FF7900",
       strokeOpacity: 0,
       strokeWeight: 2,
       fillcolor: "#BDFCEB",
@@ -1066,8 +1064,8 @@ function initMap() {
   const onChangeHandler = function () {
     calculateAndDisplayRoute(directionsService, directionsRenderer);
   };
-  document.getElementById("start").addEventListener("change", onChangeHandler);
-  document.getElementById("end").addEventListener("change", onChangeHandler);
+  //document.getElementById("start").addEventListener("change", onChangeHandler);
+  //document.getElementById("end").addEventListener("change", onChangeHandler);
 
 }
 
@@ -1092,6 +1090,24 @@ function calculateAndDisplayRoute(directionsService, directionsRenderer) {
   );
 }
 
+// TODO don't use shitty global variables
+let parkingLotsEnabled = false;
+function toggleParkingLotOverlays() {
+  if(!parkingLotsEnabled) {
+    for(let i = 0; i < parkingOverlays.length; i++) {
+      parkingOverlays[i].setOptions({fillOpacity:0.3});
+      parkingOverlays[i].setOptions({strokeOpacity:0.8});
+    }
+    map.fitBounds(bounds);
+  } else {
+    for(let i = 0; i < parkingOverlays.length; i++) {
+      parkingOverlays[i].setOptions({fillOpacity:0});
+      parkingOverlays[i].setOptions({strokeOpacity:0});
+    }
+  }
+  parkingLotsEnabled = !parkingLotsEnabled;
+}
+
 function toggle() {
   document.getElementById('sidebar').classList.toggle('collapsed');
 }
@@ -1107,14 +1123,3 @@ function clubToggle() {
   }
 }
 
-/*
-for (i = 0; i < coll.length; i++) {
-  coll[i].addEventListener("click", function() {
-    this.classList.toggle("active");
-    var content = this.nextElementSibling;
-    if (content.style.display === "block") {
-      content.style.display = "none";
-    } else {
-      content.style.display = "block";
-    }
-  });*/
