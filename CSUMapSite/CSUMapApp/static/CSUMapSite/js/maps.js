@@ -1,5 +1,5 @@
 let map;
-
+var displayed = false;
 function initMap() {
   // initialize map
   map = new google.maps.Map(document.getElementById("map"), {
@@ -128,7 +128,7 @@ function initMap() {
       content: activities[i].content,
     });
     marker.addListener("click", () => {
-      toggle();
+      toggle(displayed);
       infowindow.open(map, marker);
     });
   }
@@ -986,11 +986,10 @@ function initMap() {
       });
       google.maps.event.addDomListener(overlay, 'mousedown', function(){
         //alert("You've clicked on " ++ "!");
-        var data = {'buildingName': overlayCoords[i][0].name, 
-                     csrfmiddlewaretoken: '{{ csrf_token }}'
-      };
+        var data = {'buildingName': overlayCoords[i][0].lat, 
+      	};
             $.post(url ,data ,doNothing());
-            toggle(); 
+            toggle(displayed); 
       });
     }
   }
@@ -1051,8 +1050,15 @@ function calculateAndDisplayRoute(directionsService, directionsRenderer) {
   );
 }
 
-function toggle() {
-  document.getElementById('sidebar').classList.toggle('collapsed');
+function toggle(disp) {
+	console.log(disp);
+	if(disp) {
+		doNothing();
+	}
+	else {
+  	document.getElementById('sidebar').classList.toggle('collapsed');
+		displayed = true;
+	}
 }
 
 function clubToggle() {
