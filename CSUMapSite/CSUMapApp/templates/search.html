@@ -7,24 +7,30 @@
 		<link rel="stylesheet" href="/static/CSUMapSite/css/main.css?{% now "U" %}"/>
   </head>
   <body >
-		<div id = "sidebar" class = 'collapsed'>
 
-				<p id = "text" class = "center">  {{buildings.buildingName}} </p>
-				<a href = "https://www.csuchico.edu/aaspace/commonspaces/ocnl/index.shtml" id = "text2" class = "center">Layout & Room Photos</a>
-				<button onClick = "clubToggle()" type="button" id = "collapsible"> Clubs </button>
-				<div id = "club-content">
-					<p id = "text2" class = "center"> {{buildings.clubs}} </p>
-				</div>
+    <div id = "sidebar" class = 'collapsed'>
 
-		</div>
-		<div id = "content">
+      <p id = "text" class = "center">  {{buildings.buildingName}} </p>
+      <a href = "https://www.csuchico.edu/aaspace/commonspaces/ocnl/index.shtml" id = "text2" class = "center">Layout & Room Photos</a>
+      <button onClick = "clubToggle()" type="button" id = "collapsible"> Clubs </button>
+      <div id = "club-content">
+        <p id = "text2" class = "center"> {{buildings.clubs}} </p>
+      </div>
 
-		<button onClick="toggle()">Toggle Sidebar</button>
-    <ul>
-        <li><a href="{% url 'home' %}">Home</a></li>
-        <li><a href="{% url 'distanceFinder' %}">Finding Walking distanceFinder</a></li>
-        <li><a href="{% url 'search' %}">Search Buildings </a></li>
-    </ul>
+  </div>
+  <div id = "content">
+  <button onClick="toggle()">Toggle Sidebar</button>
+  <ul>
+    <li><a href="{% url 'home' %}">Home</a></li>
+    <li><a href="{% url 'distanceFinder' %}">Find Walking Distance</a></li>
+    <li><a href="{% url 'search' %}">Search Buildings</a></li>
+  </ul>
+
+
+
+
+
+
     <form action="\", method = "POST">
         {% csrf_token %}
         {{formIns}}
@@ -36,7 +42,6 @@
      </script>
     <div id="map">
       <script type="text/javascript" src="{% static 'CSUMapSite/js/search.js' %}"></script>
-      <script type="text/javascript" src="{% static 'CSUMapSite/js/maps.js' %}"></script>
       <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAhe-DDc6oPRLz3UtZcJWRJPGGkXY46w7g&callback=initMap" type="text/javascript"></script>
     </div>
   <script src="https://unpkg.com/react@16/umd/react.development.js" crossorigin></script>  <script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js" crossorigin></script>

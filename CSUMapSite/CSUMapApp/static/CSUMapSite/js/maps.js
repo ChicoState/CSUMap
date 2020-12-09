@@ -1,3 +1,5 @@
+let map;
+
 function initMap() {
   // initialize map
   map = new google.maps.Map(document.getElementById("map"), {
@@ -7,6 +9,13 @@ function initMap() {
       lng: -121.846298
     },
   });
+
+  searchBuilding(bnlat , bnlng);
+   if(bnlat != ""||bnlng !=""){
+     searchBuilding(map, bnlat, bnlng);
+      console.log(bnlat);
+   }
+
 
   // Enable dev tool to quickly generate lat/lng coordinates
   let debug = false;
@@ -976,7 +985,12 @@ function initMap() {
         overlay.setOptions({strokeOpacity:0});
       });
       google.maps.event.addDomListener(overlay, 'mousedown', function(){
-        alert("You've clicked on " + overlayCoords[i][0].name + "!");
+        //alert("You've clicked on " ++ "!");
+        var data = {'buildingName': overlayCoords[i][0].name, 
+                     csrfmiddlewaretoken: '{{ csrf_token }}'
+      };
+            $.post(url ,data ,doNothing());
+            toggle(); 
       });
     }
   }
@@ -984,8 +998,8 @@ function initMap() {
   const onChangeHandler = function () {
     calculateAndDisplayRoute(directionsService, directionsRenderer);
   };
-  //document.getElementById("start").addEventListener("change", onChangeHandler);
-  //document.getElementById("end").addEventListener("change", onChangeHandler);
+  document.getElementById("start").addEventListener("change", onChangeHandler);
+  document.getElementById("end").addEventListener("change", onChangeHandler);
 
   // Create the initial InfoWindow.
   if(debug) {
@@ -1012,6 +1026,8 @@ function initMap() {
     });
 
   }
+ 
+
 }
 
 function calculateAndDisplayRoute(directionsService, directionsRenderer) {
@@ -1048,6 +1064,26 @@ function clubToggle() {
   else {
     coll.style.display = "none";
   }
+}
+
+
+function searchBuilding(bnlat ,bnlng) {
+  if(bnlat == ""||bnlng ==""){
+  }
+  else {
+      var uluru = {lat: parseFloat(bnlat), lng:parseFloat(bnlng)};
+      var marker = new google.maps.Marker({position: uluru, map});
+      map.setZoom(map.getZoom() + 1);
+      map.setCenter(marker.getPosition());
+      marker.setMap(null);
+      }
+      console.log("Done is done")
+}
+
+
+
+function doNothing() {
+
 }
 
 /*
