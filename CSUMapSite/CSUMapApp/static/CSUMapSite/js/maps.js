@@ -8,8 +8,10 @@ function initMap() {
     },
   });
 
-  // Enable dev tool to quickly generate lat/lng coordinates
-  let debug = false;
+  // Enable dev tool to quickly generate lat/lng coordinates?
+  let debug = true;
+
+  // Show building overlays?
   let showOverlays = true;
 
   // Enable directions services
@@ -106,7 +108,6 @@ function initMap() {
       content: "Hey it's the town center",
       type: "info",
     },
-    // Entries below this line are CSU Chico clickable buildings
   ]
 
   for (let i = 0; i < activities.length; i++) {
@@ -119,14 +120,42 @@ function initMap() {
       content: activities[i].content,
     });
     marker.addListener("click", () => {
-      toggle();
+      //toggle();
       infowindow.open(map, marker);
     });
   }
 
+  const parkingCoords = [
+    [
+      // format:
+      // [0] = name
+      // [1] = center point (where to set the pinpoint marker)
+      // [2:] = boundary
+      { name: "North parking lot" },
+      { lat: 39.73344639713582, lng: -121.8511717331281 },
+      { lat: 39.73408395342275, lng: -121.85107233204651 },
+      { lat: 39.733126867504296, lng: -121.85039641537476 },
+      { lat: 39.73278858395804, lng: -121.85121180691529 },
+      { lat: 39.73373742384905, lng: -121.85188772358704 },
+    ],
+    [
+      { name: "First and Ivy parking structure" },
+      { lat: 39.72664833907064, lng: -121.8468295324925 },
+      { lat: 39.72713067131751, lng: -121.84678566106855 },
+      { lat: 39.7266088371871, lng: -121.84619840511282 },
+      { lat: 39.726253454895335, lng: -121.84671542161502 },
+      { lat: 39.72629471298603, lng: -121.84676101916827 },
+      { lat: 39.726187441898844, lng: -121.84692463391818 },
+      { lat: 39.726672223369484, lng: -121.84747716897525 },
+    ],
+  ]
+
   // define LatLng coordinates for polygon overlay
   const overlayCoords = [
     [
+      // format:
+      // [0] = name OR lat = lng = -1 to deliniate inner path (cut a hole instead of making an overlay)
+      // [1:] = boundary
       { name: "Laxson/Ayres" },
       { lat: 39.7296952586545, lng: -121.84379068088681 },
       { lat: 39.72972001227613, lng: -121.84375581216962 },
@@ -932,6 +961,7 @@ function initMap() {
 
   // construct polygon overlay
 
+  // construct overlay for the transparant boundary that covers entire campus
   map.setOptions({draggableCursor:'default'});
   const boundaryOverlay = new google.maps.Polygon({
     paths: [ChicoCampusCoords],
@@ -942,8 +972,33 @@ function initMap() {
     fillOpacity: 0.07,
     clickable:false
   });
-  boundaryOverlay.setMap(map);
 
+  var bounds = new google.maps.LatLngBounds();
+  // construct overlays for parking lots
+  for (let i = 0; i < parkingCoords.length; i++) {
+    paths = parkingCoords[i].slice(2);
+    const overlay = new google.maps.Polygon({
+      paths: paths,
+      strokeColor: "#69202e",
+      strokeOpacity: .8,
+      strokeWeight: 2,
+      fillcolor: "#BDFCEB",
+      fillOpacity: .3,
+    });
+    if(showOverlays) {
+      overlay.setMap(map);
+    }
+    // set markers
+    var marker = new google.maps.Marker({
+      position: parkingCoords[i][1],
+      map,
+      title: parkingCoords[i][0].name,
+    });
+    bounds.extend(marker.position);
+  }
+  map.fitBounds(bounds);
+
+  // construct overlays for campus buildings
   for (let i = 0; i < overlayCoords.length; i++) {
     paths = [];
     if(overlayCoords[i][0].lat < 0 && Number.isInteger(overlayCoords[i][0].lat)) {
@@ -966,6 +1021,7 @@ function initMap() {
       fillOpacity: 0,
     });
     if(showOverlays) {
+      boundaryOverlay.setMap(map);
       overlay.setMap(map);
       google.maps.event.addDomListener(overlay, 'mouseover', function(){
         overlay.setOptions({fillOpacity:0.28});
@@ -976,18 +1032,12 @@ function initMap() {
         overlay.setOptions({strokeOpacity:0});
       });
       google.maps.event.addDomListener(overlay, 'mousedown', function(){
-        alert("You've clicked on " + overlayCoords[i][0].name + "!");
+        toggle();
       });
     }
   }
 
-  const onChangeHandler = function () {
-    calculateAndDisplayRoute(directionsService, directionsRenderer);
-  };
-  //document.getElementById("start").addEventListener("change", onChangeHandler);
-  //document.getElementById("end").addEventListener("change", onChangeHandler);
-
-  // Create the initial InfoWindow.
+  // Optional debug option to quickly get lat/lng coordinates
   if(debug) {
     var myLatlng = { lat: 39.730041, lng: -121.846298 };
     var infoWindow = new google.maps.InfoWindow(
@@ -1002,8 +1052,8 @@ function initMap() {
 
       // Create a new InfoWindow.
       infoWindow = new google.maps.InfoWindow({position: mapsMouseEvent.latLng});
-      //message += "{ lat: " + mapsMouseEvent.latLng.lat().toString() + ", lng: " + mapsMouseEvent.latLng.lng().toString() + " };<br \>";
-      message += mapsMouseEvent.latLng.lat().toString() + "," +  mapsMouseEvent.latLng.lng().toString() + "<br \>";
+      message += "{ lat: " + mapsMouseEvent.latLng.lat().toString() + ", lng: " + mapsMouseEvent.latLng.lng().toString() + " },<br \>";
+      //message += mapsMouseEvent.latLng.lat().toString() + "," +  mapsMouseEvent.latLng.lng().toString() + "<br \>";
       infoWindow.setContent(message);
       infoWindow.open(map);
       google.maps.event.addListener(infoWindow, 'closeclick', function() {
@@ -1012,6 +1062,13 @@ function initMap() {
     });
 
   }
+
+  const onChangeHandler = function () {
+    calculateAndDisplayRoute(directionsService, directionsRenderer);
+  };
+  document.getElementById("start").addEventListener("change", onChangeHandler);
+  document.getElementById("end").addEventListener("change", onChangeHandler);
+
 }
 
 function calculateAndDisplayRoute(directionsService, directionsRenderer) {
