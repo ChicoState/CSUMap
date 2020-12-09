@@ -1074,6 +1074,7 @@ function clubToggle() {
 
 
 function searchBuilding(bnlat ,bnlng) {
+	toggle(displayed);
   if(bnlat == ""||bnlng ==""){
   }
   else {

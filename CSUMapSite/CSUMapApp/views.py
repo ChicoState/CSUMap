@@ -10,20 +10,12 @@ def search(request):
         if 'search' in request.POST:
             mapFormIns = forms.mapForm(request.POST)
             if mapFormIns.is_valid():
-                print("mapsformINs")
-                #print(mapsFormIns)
                 buildingN = mapFormIns.cleaned_data["buildingName"],
                 buildingLocation = buildingN[0]
                 buildingLatLng = buildingLocation.split(',')
-                print("buildingN")
-                print(buildingN)
-                print(buildingLocation)
-                print("PRINTING LAT LONG")
-                print(buildingLatLng)
                 bLat =  buildingLatLng[0]
                 bLng =  buildingLatLng[1]
                 bname = buildingLatLng[2]
-                #print("PRINTING BNAME @@@@@@@@@@@     " + bname)
                 buildings = Building.objects.get(buildingName = bname)
         elif 'buildingName' in request.POST:
                 mapFormIns = forms.mapForm()

@@ -14,6 +14,7 @@ class Building(models.Model):
 #	cordinates = models.ForeignKey(buildingCordinates)
 	buildingDesc =  models.TextField()
 	bUrl = models.TextField()
+	header_image = models.ImageField(null = True, blank = True, upload_to="images/")
 	def __str__(self):
 		return self.buildingName
 

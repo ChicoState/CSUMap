@@ -3,19 +3,26 @@
 <html>
   <head>
     <meta charset="UTF-8">
-    <title>title</title>
+    <title>CSU Chico Campus Map</title>
 		<link rel="stylesheet" href="/static/CSUMapSite/css/main.css?{% now "U" %}"/>
 	<script> url = "{% url 'search' %}" </script>
   </head>
   <body >
 		<div id = "sidebar" class = 'collapsed'>
-			<form action="\", method = "POST">
-				{% csrf_token %}
-				{{formIns}}
-				<input type = "submit" name = "search" value="Search Building">
-			 </form>
+			<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
+				{% if buildings.header_image %}
+				<img src = "/static/CSUMapSite/{{buildings.header_image}}" id = "image" class = "center">
+				{%endif%}
+				<p id = "text" class = "center">  {{buildings.buildingName}} </p>
+				<a href = "{{buildings.bUrl}}" id = "text2" class = "center">Layout & Room Photos</a>
+				<button onClick = "clubToggle()" type="button" id = "collapsible"> Clubs </button>
+				<div id = "club-content">
+					<p id = "text2" class = "center"> {{buildings.clubs}} </p>
+				</div>	
+
 			<div id="floating-panel">
-				<b>Start: </b>
+				<p id = text2 class = "center"> Enter building names for walking directions! </p>
+				<b id = "text2">Start: </b>
 				<select id="start">
 					<option value="39.72965383339868,-121.84362421420995">Laxson Aryes</option>
 			<option value="39.72786079343008,-121.84729082054753">O'Connel</option>
@@ -45,7 +52,7 @@
 			<option value="39.731016897747175,-121.84535178177333">Holt Hall</option>
 					<option value="39.73021098881368,-121.84950620550569">Acker Gymnasium</option>
 		  </select>
-				<b>End: </b>
+				<b id = text2>End: </b>
 				<select id="end">
 					<option value="39.72965383339868,-121.84362421420995">Laxson Aryes</option>
 			<option value="39.72786079343008,-121.84729082054753">O'Connel</option>
@@ -76,20 +83,19 @@
 					<option value="39.73021098881368,-121.84950620550569">Acker Gymnasium</option>
 				</select>
 			</div>
-			<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
-				<p id = "text" class = "center">  {{buildings.buildingName}} </p>
-				<a href = "{{buildings.bUrl}}" id = "text2" class = "center">Layout & Room Photos</a>
-				<button onClick = "clubToggle()" type="button" id = "collapsible"> Clubs </button>
-				<div id = "club-content">
-					<p id = "text2" class = "center"> {{buildings.clubs}} </p>
-				</div>	
-				{{bnname}}
 	</div>
 		<div id = "content">
 		<button onClick="toggle()">Toggle Sidebar</button>
 		<ul>
 			<li><a href="{% url 'home' %}">Home</a></li>
 			<li><a href="{% url 'search' %}">Search Buildings</a></li>
+			<li> 
+			<form action="\", method = "POST">
+				{% csrf_token %}
+				{{formIns}}
+				<input type = "submit" name = "search" value="Search Building">
+			 </form>
+			 </li>
 		</ul>
 
 		<script type="text/javascript"> 
