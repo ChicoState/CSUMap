@@ -1,6 +1,6 @@
 from django import forms
 BUILDING_LIST =( 
-    ("39.72786079343008,-121.84729082054753,OConnel Hall", 'O\'Connel'),
+    ("39.72786079343008,-121.84729082054753,OConnel Hall", 'O\'Connell Hall'),
     ("39.72747763926558,-121.84696559524535, Langdon Hall" ,"Langdon Hall"),
     ("39.729408290689484,-121.84348322002653, Arts and Humanities", "Arts and Humanities"), 
     ("39.72881007297421,-121.84433079807523, Preforming Arts Center", "Performing Arts Center"), 

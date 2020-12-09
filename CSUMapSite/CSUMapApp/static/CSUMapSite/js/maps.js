@@ -1072,6 +1072,28 @@ function clubToggle() {
   }
 }
 
+function descToggle() {
+  var coll = document.getElementById("desc-content");
+  coll.classList.toggle("active");
+  if(coll.style.display == "none") {
+    coll.style.display = "block";
+  }
+  else {
+    coll.style.display = "none";
+  }
+}
+
+function cltrToggle() {
+  var coll = document.getElementById("cltr-content");
+  coll.classList.toggle("active");
+  if(coll.style.display == "none") {
+    coll.style.display = "block";
+  }
+  else {
+    coll.style.display = "none";
+  }
+}
+
 
 function searchBuilding(bnlat ,bnlng) {
 	toggle(displayed);
