@@ -7,6 +7,8 @@ let debug = false;
 // Show building overlays?
 let showOverlays = true;
 
+let campusOverlays = [];
+
 let parkingOverlays = [];
 var parkingBounds;
 
@@ -25,8 +27,6 @@ function initMap() {
       lng: -121.846298
     },
   });
-
-  searchBuilding(bnlat , bnlng);
 
   // Enable directions services
   const directionsService = new google.maps.DirectionsService();
@@ -526,7 +526,7 @@ function initMap() {
     { lat: 39.72875110782062, lng: -121.84394448041564 },
   ]
   // define LatLng coordinates for polygon overlay
-  const overlayCoords = [
+  campusCoords = [
     [
       // format:
       // [0] = name OR lat = lng = -1 to deliniate inner path (cut a hole instead of making an overlay)
@@ -1494,18 +1494,18 @@ function initMap() {
   }
 
   // construct overlays for campus buildings
-  for (let i = 0; i < overlayCoords.length; i++) {
+  for (let i = 0; i < campusCoords.length; i++) {
     paths = [];
-    if(overlayCoords[i][0].lat < 0 && Number.isInteger(overlayCoords[i][0].lat)) {
+    if(campusCoords[i][0].lat < 0 && Number.isInteger(campusCoords[i][0].lat)) {
       innerPaths = [];
-      for(let j = 0; j < Math.abs(overlayCoords[i][0].lat); j++) {
-        innerPaths.push(overlayCoords[i+j]);
+      for(let j = 0; j < Math.abs(campusCoords[i][0].lat); j++) {
+        innerPaths.push(campusCoords[i+j]);
       }
       //TODO
-      _paths = [overlayCoords[i+Math.abs(overlayCoords[i][0].lat)].slice(1), innerPaths[0].slice(1)];
+      _paths = [campusCoords[i+Math.abs(campusCoords[i][0].lat)].slice(1), innerPaths[0].slice(1)];
       i++;
     } else {
-      _paths = [overlayCoords[i].slice(1)];
+      _paths = [campusCoords[i].slice(1)];
     }
     const overlay = new google.maps.Polygon({
       paths: _paths,
@@ -1517,6 +1517,8 @@ function initMap() {
     });
     if(showOverlays) {
       boundaryOverlay.setMap(map);
+      campusOverlays.push([overlay, campusCoords[i][0].name]);
+      console.log(campusOverlays.length);
       overlay.setMap(map);
       google.maps.event.addDomListener(overlay, 'mouseover', function(){
         overlay.setOptions({fillOpacity:0.28});
@@ -1528,13 +1530,15 @@ function initMap() {
       });
       google.maps.event.addDomListener(overlay, 'mousedown', function(){
         //alert("You've clicked on " ++ "!");
-        var data = {'buildingName': overlayCoords[i][0].lat,
+        var data = {'buildingName': campusCoords[i][0].lat,
       	};
             $.post(url ,data ,doNothing());
             toggle(displayed);
       });
     }
   }
+
+  searchBuilding(bnlat , bnlng, name);
 
   if(debug) {
     var myLatlng = { lat: 39.730041, lng: -121.846298 };
@@ -1598,6 +1602,10 @@ function toggle(disp) {
   	document.getElementById('sidebar').classList.toggle('collapsed');
 		displayed = true;
 	}
+    for(let i = 0; i < campusOverlays.length; i++) {
+        campusOverlays[i][0].setOptions({fillOpacity:0});
+        campusOverlays[i][0].setOptions({strokeOpacity:0});
+    }
 }
 
 // TODO don't use shitty global variables
@@ -1684,18 +1692,25 @@ function cltrToggle() {
 }
 
 
-function searchBuilding(bnlat ,bnlng) {
-	toggle(displayed);
+function searchBuilding(bnlat ,bnlng, name) {
+  toggle(displayed);
   if(bnlat == ""||bnlng ==""){
   }
   else {
-      var uluru = {lat: parseFloat(bnlat), lng:parseFloat(bnlng)};
-      var marker = new google.maps.Marker({position: uluru, map});
-      map.setZoom(map.getZoom() + 1);
-      map.setCenter(marker.getPosition());
-      marker.setMap(null);
+    var uluru = {lat: parseFloat(bnlat), lng:parseFloat(bnlng)};
+    var marker = new google.maps.Marker({position: uluru, map});
+    map.setZoom(map.getZoom() + 1);
+    map.setCenter(marker.getPosition());
+    marker.setMap(null);
+    for(let i = 0; i < campusOverlays.length; i++) {
+      if(campusOverlays[i][1] == name) {
+        if(displayed) {
+          campusOverlays[i][0].setOptions({fillOpacity:0.28});
+          campusOverlays[i][0].setOptions({strokeOpacity:0.8});
+        }
       }
-      console.log("Done is done")
+    }
+  }
 }
 
 
