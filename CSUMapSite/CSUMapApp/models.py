@@ -1,10 +1,22 @@
 from django.db import models
+#from django.contrib.postgres.fields import ArrayField
+
+#class buildingCordinates(models.Model):
+#     lat =  models.FloatField()
+#     lng =  models.FloatField()
+#     def __str__(self):
+#	     return str(self.lat) + ',' + str(self.lng) 
+#
 
 class Building(models.Model):
 	buildingName = models.CharField(max_length = 100)
-	clubs = models.TextField()
+	clubs =    models.TextField()
+#	cordinates = models.ForeignKey(buildingCordinates)
+	buildingDesc =  models.TextField()
+	bUrl = models.TextField()
+	header_image = models.ImageField(null = True, blank = True, upload_to="images/")
+	def __str__(self):
+		return self.buildingName
 
-def __str__(self):
-	return self.buildingName
 
-# Create your models here.
+

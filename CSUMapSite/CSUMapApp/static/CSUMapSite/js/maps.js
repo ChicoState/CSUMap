@@ -1,3 +1,6 @@
+let map;
+var displayed = false;
+
 // Enable dev tool to quickly generate lat/lng coordinates?
 let debug = false;
 
@@ -22,6 +25,8 @@ function initMap() {
       lng: -121.846298
     },
   });
+
+  searchBuilding(bnlat , bnlng);
 
   // Enable directions services
   const directionsService = new google.maps.DirectionsService();
@@ -129,7 +134,6 @@ function initMap() {
       content: activities[i].content,
     });
     marker.addListener("click", () => {
-      //toggle();
       infowindow.open(map, marker);
     });
   }
@@ -1523,12 +1527,15 @@ function initMap() {
         overlay.setOptions({strokeOpacity:0});
       });
       google.maps.event.addDomListener(overlay, 'mousedown', function(){
-        toggle();
+        //alert("You've clicked on " ++ "!");
+        var data = {'buildingName': overlayCoords[i][0].lat,
+      	};
+            $.post(url ,data ,doNothing());
+            toggle(displayed);
       });
     }
   }
 
-  // Optional debug option to quickly get lat/lng coordinates
   if(debug) {
     var myLatlng = { lat: 39.730041, lng: -121.846298 };
     var infoWindow = new google.maps.InfoWindow(
@@ -1557,8 +1564,8 @@ function initMap() {
   const onChangeHandler = function () {
     calculateAndDisplayRoute(directionsService, directionsRenderer);
   };
-  //document.getElementById("start").addEventListener("change", onChangeHandler);
-  //document.getElementById("end").addEventListener("change", onChangeHandler);
+  document.getElementById("start").addEventListener("change", onChangeHandler);
+  document.getElementById("end").addEventListener("change", onChangeHandler);
 
 }
 
@@ -1580,6 +1587,17 @@ function calculateAndDisplayRoute(directionsService, directionsRenderer) {
       }
     }
   );
+}
+
+function toggle(disp) {
+	console.log(disp);
+	if(disp) {
+		doNothing();
+	}
+	else {
+  	document.getElementById('sidebar').classList.toggle('collapsed');
+		displayed = true;
+	}
 }
 
 // TODO don't use shitty global variables
@@ -1632,10 +1650,6 @@ function toggleBathroomPoints() {
   bathroomPointsEnabled = !bathroomPointsEnabled;
 }
 
-function toggle() {
-  document.getElementById('sidebar').classList.toggle('collapsed');
-}
-
 function clubToggle() {
   var coll = document.getElementById("club-content");
   coll.classList.toggle("active");
@@ -1647,4 +1661,45 @@ function clubToggle() {
   }
 }
 
+function descToggle() {
+  var coll = document.getElementById("desc-content");
+  coll.classList.toggle("active");
+  if(coll.style.display == "none") {
+    coll.style.display = "block";
+  }
+  else {
+    coll.style.display = "none";
+  }
+}
 
+function cltrToggle() {
+  var coll = document.getElementById("cltr-content");
+  coll.classList.toggle("active");
+  if(coll.style.display == "none") {
+    coll.style.display = "block";
+  }
+  else {
+    coll.style.display = "none";
+  }
+}
+
+
+function searchBuilding(bnlat ,bnlng) {
+	toggle(displayed);
+  if(bnlat == ""||bnlng ==""){
+  }
+  else {
+      var uluru = {lat: parseFloat(bnlat), lng:parseFloat(bnlng)};
+      var marker = new google.maps.Marker({position: uluru, map});
+      map.setZoom(map.getZoom() + 1);
+      map.setCenter(marker.getPosition());
+      marker.setMap(null);
+      }
+      console.log("Done is done")
+}
+
+
+
+function doNothing() {
+
+}

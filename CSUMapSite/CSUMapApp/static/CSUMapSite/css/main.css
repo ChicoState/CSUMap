@@ -7,6 +7,13 @@ html, body {
   margin: 0;
 }
 
+#image {
+	width: 85%;
+	height: auto;
+	max-height: 10vw;
+	padding: 10px;
+}
+
 #sidebar, #content {
   height: 100%;
   overflow:auto;
@@ -31,6 +38,14 @@ html, body {
 }
 
 #club-content {
+	display: none;
+}
+
+#desc-content {
+	display: none;
+}
+
+#cltr-content {
 	display: none;
 }
 
@@ -81,8 +96,29 @@ li a {
 	display: inline-block;
 	color: white;
 	text-align: center;
+	padding: 19.25px 16px;
+	text-decoration: none;
+}
+
+li form {
+	font-family: Arial, Helvetica, sans-serif;
+	display: inline-block;
+	color: white;
+	text-align: center;
 	padding: 14px 16px;
 	text-decoration: none;
+}
+
+form {
+	padding: 10px 10px;
+	font-family: Arial, Helvetica, sans-serif;
+	display: inline-block;
+}
+
+li button {
+	font-family: Arial, Helvetica, sans-serif;
+	display: inline-block;
+	padding: 4px 12px;
 }
 
 .explanation {
