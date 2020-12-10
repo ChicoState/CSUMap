@@ -1,5 +1,21 @@
 let map;
 var displayed = false;
+
+// Enable dev tool to quickly generate lat/lng coordinates?
+let debug = false;
+
+// Show building overlays?
+let showOverlays = true;
+
+let parkingOverlays = [];
+var parkingBounds;
+
+let wifiOverlays = [];
+var wifiBounds;
+
+let bathroomPoints = [];
+var bathroomBounds;
+
 function initMap() {
   // initialize map
   map = new google.maps.Map(document.getElementById("map"), {
@@ -11,15 +27,6 @@ function initMap() {
   });
 
   searchBuilding(bnlat , bnlng);
-   if(bnlat != ""||bnlng !=""){
-     searchBuilding(map, bnlat, bnlng);
-      console.log(bnlat);
-   }
-
-
-  // Enable dev tool to quickly generate lat/lng coordinates
-  let debug = false;
-  let showOverlays = true;
 
   // Enable directions services
   const directionsService = new google.maps.DirectionsService();
@@ -115,7 +122,6 @@ function initMap() {
       content: "Hey it's the town center",
       type: "info",
     },
-    // Entries below this line are CSU Chico clickable buildings
   ]
 
   for (let i = 0; i < activities.length; i++) {
@@ -128,14 +134,403 @@ function initMap() {
       content: activities[i].content,
     });
     marker.addListener("click", () => {
-      toggle(displayed);
       infowindow.open(map, marker);
     });
   }
 
+  const parkingCoords = [
+    [
+      // format:
+      // [0] = name
+      // [1] = center point (where to set the pinpoint marker)
+      // [2:] = boundary
+      { name: "North parking lot" },
+      { lat: 39.73344639713582, lng: -121.8511717331281 },
+      { lat: 39.73408395342275, lng: -121.85107233204651 },
+      { lat: 39.733126867504296, lng: -121.85039641537476 },
+      { lat: 39.73278858395804, lng: -121.85121180691529 },
+      { lat: 39.73373742384905, lng: -121.85188772358704 },
+    ],
+    [
+      { name: "First and Ivy parking structure" },
+      { lat: 39.72664833907064, lng: -121.8468295324925 },
+      { lat: 39.72713067131751, lng: -121.84678566106855 },
+      { lat: 39.7266088371871, lng: -121.84619840511282 },
+      { lat: 39.726253454895335, lng: -121.84671542161502 },
+      { lat: 39.72629471298603, lng: -121.84676101916827 },
+      { lat: 39.726187441898844, lng: -121.84692463391818 },
+      { lat: 39.726672223369484, lng: -121.84747716897525 },
+    ],
+    [
+      { name: "Stadium Parking" },
+      { lat: 39.73112950086854, lng: -121.85235442795563 },
+      { lat: 39.73162868680119, lng: -121.85217740216065 },
+      { lat: 39.7309190991033, lng: -121.85169460453797 },
+      { lat: 39.73051456175643, lng: -121.85185017266083 },
+      { lat: 39.73057667917126, lng: -121.85239197888184 },
+      { lat: 39.73130277242832, lng: -121.85301961579133 },
+    ],
+    [
+      { name: "1st and Orange" },
+      { lat: 39.726292401849925, lng: -121.84935381068088 },
+      { lat: 39.72677544201949, lng: -121.84965421809055 },
+      { lat: 39.726028671963945, lng: -121.84872885598041 },
+      { lat: 39.725803814202656, lng: -121.84904803885318 },
+      { lat: 39.72656470463845, lng: -121.84994121445514 },
+    ],
+    [
+      { name: "Police Information Center" },
+      { lat: 39.72789941829104, lng: -121.8433131459146 },
+      { lat: 39.72828060672955, lng: -121.84316317200734 },
+      { lat: 39.727949492081585, lng: -121.84280777931286 },
+      { lat: 39.72752162447163, lng: -121.84343585697704 },
+      { lat: 39.72754350447902, lng: -121.84346670238071 },
+      { lat: 39.72751433113428, lng: -121.84351364103847 },
+      { lat: 39.727825026621574, lng: -121.84388110367351 },
+    ],
+    [
+      { name: "City Parking Lot 7" },
+      { lat: 39.72855577444988, lng: -121.84245292889821 },
+      { lat: 39.72895802634835, lng: -121.84222762334096 },
+      { lat: 39.72867129318402, lng: -121.84188430058705 },
+      { lat: 39.72815145735609, lng: -121.84262190806615 },
+      { lat: 39.72846088391631, lng: -121.8429920529102 },
+    ],
+    [
+      { name: "City Parking Lot 2" },
+      { lat: 39.72973776949801, lng: -121.84242944267027 },
+      { lat: 39.73009669592022, lng: -121.84249649789564 },
+      { lat: 39.72980377909519, lng: -121.8421478107237 },
+      { lat: 39.72948610732889, lng: -121.84259573962919 },
+      { lat: 39.72962018974645, lng: -121.84277276542417 },
+      { lat: 39.72986566303514, lng: -121.84239457395307 },
+      { lat: 39.730041000563396, lng: -121.84260915067426 },
+    ],
+    [
+      { name: "City Parking Lot 3" },
+      { lat: 39.728240159778686, lng: -121.84079865958921 },
+      { lat: 39.7285949683278, lng: -121.84092472341291 },
+      { lat: 39.728116388924995, lng: -121.84038828160993 },
+      { lat: 39.72809988612771, lng: -121.84040973928205 },
+      { lat: 39.72806069196833, lng: -121.84037487056486 },
+      { lat: 39.72787297226453, lng: -121.8406538203024 },
+      { lat: 39.728359804726054, lng: -121.84120367315046 },
+      { lat: 39.72838662166853, lng: -121.84116880443327 },
+      { lat: 39.72841756428149, lng: -121.84119830873243 },
+    ],
+    [
+      { name: "City Parking Lot 1" },
+      { lat: 39.73089903190326, lng: -121.83858055819582 },
+      { lat: 39.731420909764424, lng: -121.8386315201671 },
+      { lat: 39.73142503526536, lng: -121.83848399867128 },
+      { lat: 39.73133221143429, lng: -121.83832038392137 },
+      { lat: 39.73132602317444, lng: -121.83828015078615 },
+      { lat: 39.73089490637081, lng: -121.83776516665529 },
+      { lat: 39.73032351774443, lng: -121.83864493121217 },
+      { lat: 39.73094647550844, lng: -121.83936644543718 },
+    ],
+  ]
+
+  const wifiCoords = [
+    [
+      // format:
+      // [0] = name
+      // [1] = center point (where to set the pinpoint marker)
+      // [2:] = boundary
+      { name: "Tennis courts" },
+      { lat: 39.72882531067669, lng: -121.85092148638518 },
+      { lat: 39.728943833095656, lng: -121.85041787304688 },
+      { lat: 39.7288118121913, lng: -121.85031594910431 },
+      { lat: 39.72855602096969, lng: -121.85048761048127 },
+      { lat: 39.7284528790796, lng: -121.85072364487458 },
+      { lat: 39.728481758824365, lng: -121.85107769646454 },
+      { lat: 39.72879751554178, lng: -121.85128154434967 },
+      { lat: 39.72897255216733, lng: -121.85122253575135 },
+      { lat: 39.72910091207698, lng: -121.85110451855469 },
+      { lat: 39.729095077540784, lng: -121.85060026325989 },
+    ],
+    [
+      { name: "Yolo Hall South" },
+      { lat: 39.72836374634147, lng: -121.84976479022285 },
+      { lat: 39.728590238937535, lng: -121.84955751278123 },
+      { lat: 39.72853247952675, lng: -121.84935902931413 },
+      { lat: 39.72840045783467, lng: -121.84928929187974 },
+      { lat: 39.728214801902496, lng: -121.84948777534684 },
+      { lat: 39.72824368174698, lng: -121.84976136066636 },
+      { lat: 39.72835136928829, lng: -121.85000618903419 },
+      { lat: 39.72843594577408, lng: -121.84992572276374 },
+    ],
+    [
+      { name: "Yolo Hall East" },
+      { lat: 39.72912459490061, lng: -121.84968867930438 },
+      { lat: 39.72953583602983, lng: -121.85006687077548 },
+      { lat: 39.72949870549488, lng: -121.84985765847232 },
+      { lat: 39.72941000469155, lng: -121.84964576396014 },
+      { lat: 39.72924497963749, lng: -121.8495652976897 },
+      { lat: 39.72916040414419, lng: -121.8495492044356 },
+      { lat: 39.728848917896045, lng: -121.84934535655047 },
+      { lat: 39.72879248020196, lng: -121.84942582282092 },
+      { lat: 39.72870377848998, lng: -121.84967795046832 },
+      { lat: 39.72931231119651, lng: -121.85014465483691 },
+    ],
+    [
+      { name: "Yolo Hall South East" },
+      { lat: 39.7287864740572, lng: -121.84930285741888 },
+      { lat: 39.72884010759979, lng: -121.8493082218369 },
+      { lat: 39.72882979346023, lng: -121.84924384882055 },
+      { lat: 39.72878028556883, lng: -121.84920093347631 },
+      { lat: 39.72872974622635, lng: -121.84930419852338 },
+      { lat: 39.72879472537416, lng: -121.84934979607664 },
+    ],
+    [
+      { name: "Tehama East" },
+      { lat: 39.7302810745643, lng: -121.84805223537859 },
+      { lat: 39.73033058137797, lng: -121.84816757036623 },
+      { lat: 39.73017174689152, lng: -121.84813001944002 },
+      { lat: 39.730039728338596, lng: -121.84805223537859 },
+      { lat: 39.72988089318205, lng: -121.84804955316957 },
+      { lat: 39.72988708157162, lng: -121.84786448074755 },
+      { lat: 39.73008923532557, lng: -121.84768209053453 },
+      { lat: 39.730159370162944, lng: -121.84752920462068 },
+      { lat: 39.73021506542412, lng: -121.84772500587877 },
+      { lat: 39.73019443755486, lng: -121.84795031143602 },
+      { lat: 39.730413092655056, lng: -121.84799859119829 },
+      { lat: 39.7303904020637, lng: -121.84811392618593 },
+    ],
+    [
+      { name: "Plumas Hall East" },
+      { lat: 39.72979644725334, lng: -121.84772401263145 },
+      { lat: 39.72984389161732, lng: -121.84786214639571 },
+      { lat: 39.729851111409, lng: -121.8476623218241 },
+      { lat: 39.729774787858936, lng: -121.84756710340407 },
+      { lat: 39.72959429264082, lng: -121.84765427519706 },
+      { lat: 39.72951796880644, lng: -121.84789299179938 },
+      { lat: 39.72964173714396, lng: -121.84800028015998 },
+      { lat: 39.72969743282331, lng: -121.84795200039771 },
+      { lat: 39.72977685065869, lng: -121.84801235010055 },
+    ],
+    [
+      { name: "Butte Hall South" },
+      { lat: 39.72982129382397, lng: -121.84716088904231 },
+      { lat: 39.73001313380827, lng: -121.84699995650142 },
+      { lat: 39.729986317498486, lng: -121.84687657488674 },
+      { lat: 39.72999663146504, lng: -121.84668613804668 },
+      { lat: 39.729854298590475, lng: -121.84679074419826 },
+      { lat: 39.72970783981858, lng: -121.84694363011211 },
+      { lat: 39.729544878284145, lng: -121.84716893566936 },
+      { lat: 39.72946649158607, lng: -121.8473754657635 },
+      { lat: 39.72940667009864, lng: -121.84757394923061 },
+      { lat: 39.72950981056181, lng: -121.84763564003795 },
+      { lat: 39.72962532769738, lng: -121.84737010134548 },
+      { lat: 39.729854298590475, lng: -121.84741569889873 },
+    ],
+    [
+      { name: "Glenn Hall South" },
+      { lat: 39.728764539570435, lng: -121.84657810846038 },
+      { lat: 39.72937307174065, lng: -121.84755175033278 },
+      { lat: 39.72941845358558, lng: -121.8472835294313 },
+      { lat: 39.72885530403156, lng: -121.84662370601363 },
+      { lat: 39.729203920964565, lng: -121.84611945071883 },
+      { lat: 39.72912553387882, lng: -121.84601886788077 },
+      { lat: 39.72896050814382, lng: -121.84625624337859 },
+      { lat: 39.728642832491815, lng: -121.8460604421205 },
+      { lat: 39.728318966846246, lng: -121.846511053235 },
+      { lat: 39.72933594111805, lng: -121.8476268521852 },
+    ],
+    [
+      { name: "Glenn Hall North" },
+      { lat: 39.73011421057454, lng: -121.846451144297 },
+      { lat: 39.729945061616874, lng: -121.84631703384626 },
+      { lat: 39.7297759122442, lng: -121.84618292339552 },
+      { lat: 39.72956550634775, lng: -121.84612123258817 },
+      { lat: 39.72953662705696, lng: -121.84619097002256 },
+      { lat: 39.729441737873394, lng: -121.84613464363325 },
+      { lat: 39.729320031990305, lng: -121.84631703384626 },
+      { lat: 39.729334471682584, lng: -121.84654233940351 },
+      { lat: 39.72994918720615, lng: -121.84639034442434 },
+    ],
+    [
+      { name: "Colusa North" },
+      { lat: 39.72977728749599, lng: -121.84516580779332 },
+      { lat: 39.72997325319059, lng: -121.84524359185475 },
+      { lat: 39.72985979943529, lng: -121.84510411698598 },
+      { lat: 39.72997325319062, lng: -121.84495391328115 },
+      { lat: 39.72988661579434, lng: -121.84484126050252 },
+      { lat: 39.72952356266391, lng: -121.84533746917027 },
+      { lat: 39.72960194929708, lng: -121.84547157962102 },
+      { lat: 39.729672810773586, lng: -121.84539020061493 },
+      { lat: 39.72985154824587, lng: -121.84555472810048 },
+    ],
+    [
+      { name: "Kendall North" },
+      { lat: 39.730109397450555, lng: -121.84470715005178 },
+      { lat: 39.730204285715146, lng: -121.84494854886312 },
+      { lat: 39.73022491358145, lng: -121.84489490468282 },
+      { lat: 39.730332178386845, lng: -121.8444952555396 },
+      { lat: 39.73009702071076, lng: -121.84439333159703 },
+      { lat: 39.72989074138714, lng: -121.84470983226079 },
+      { lat: 39.73001450905539, lng: -121.84494854886312 },
+      { lat: 39.73009495792059, lng: -121.84484394271153 },
+    ],
+    [
+      { name: "Holt West" },
+      { lat: 39.7307137922067, lng: -121.84611262757558 },
+      { lat: 39.73094069671976, lng: -121.84599461037892 },
+      { lat: 39.73075711039869, lng: -121.84586049992818 },
+      { lat: 39.730672536760466, lng: -121.84610458094853 },
+      { lat: 39.73068491339694, lng: -121.8463513441779 },
+      { lat: 39.73082930732488, lng: -121.84631111104268 },
+      { lat: 39.73093863395484, lng: -121.84605898339528 },
+    ],
+    [
+      { name: "Holt South" },
+      { lat: 39.7305710431506, lng: -121.84542600674254 },
+      { lat: 39.73078557151733, lng: -121.84542064232451 },
+      { lat: 39.73061642420693, lng: -121.84533481163604 },
+      { lat: 39.73045552759969, lng: -121.8450934128247 },
+      { lat: 39.73038539306363, lng: -121.84566740555388 },
+      { lat: 39.7305256620644, lng: -121.84566740555388 },
+      { lat: 39.73053803872723, lng: -121.84588198227507 },
+      { lat: 39.73064942859276, lng: -121.84579078716857 },
+    ],
+    [
+      { name: "Holt East" },
+      { lat: 39.73081032474747, lng: -121.8446267084561 },
+      { lat: 39.73110736281571, lng: -121.84465353054625 },
+      { lat: 39.73121050073449, lng: -121.84440676731688 },
+      { lat: 39.731156869036, lng: -121.84420828384978 },
+      { lat: 39.73071956286021, lng: -121.8445891575299 },
+      { lat: 39.73059992200807, lng: -121.84502367539031 },
+      { lat: 39.730892835450355, lng: -121.84528116745574 },
+    ],
+    [
+      { name: "Holt North" },
+      { lat: 39.73176468988925, lng: -121.84452862451262 },
+      { lat: 39.73210297846021, lng: -121.84456617543883 },
+      { lat: 39.73182244659206, lng: -121.8443811030168 },
+      { lat: 39.73153778808839, lng: -121.84469223926253 },
+      { lat: 39.73123043809436, lng: -121.84446961591429 },
+      { lat: 39.73116030434667, lng: -121.84468419263548 },
+      { lat: 39.731595544981296, lng: -121.84500337550826 },
+      { lat: 39.73185338766297, lng: -121.8450462908525 },
+      { lat: 39.732022531938284, lng: -121.84516162584013 },
+      { lat: 39.73212154302883, lng: -121.84486121843047 },
+      { lat: 39.73204522199243, lng: -121.84480220983214 },
+      { lat: 39.73205966111391, lng: -121.84475661227889 },
+      { lat: 39.73201221827484, lng: -121.84471101472563 },
+      { lat: 39.7320679120391, lng: -121.84456617543883 },
+    ],
+    [
+      { name: "Modoc West" },
+      { lat: 39.732204052162324, lng: -121.84504897306151 },
+      { lat: 39.73245364168991, lng: -121.84509457061476 },
+      { lat: 39.73220198943519, lng: -121.84492559144682 },
+      { lat: 39.73207203750133, lng: -121.84515894363112 },
+      { lat: 39.732393822794556, lng: -121.8453896136064 },
+      { lat: 39.732536150425915, lng: -121.84517771909422 },
+    ],
+    [
+      { name: "Modoc East" },
+      { lat: 39.7325444012941, lng: -121.8445071668405 },
+      { lat: 39.7327506726773, lng: -121.84450984904952 },
+      { lat: 39.732674352337455, lng: -121.84415579745955 },
+      { lat: 39.73235669379895, lng: -121.8441289753694 },
+      { lat: 39.73227624757312, lng: -121.84461981961913 },
+      { lat: 39.73267228962439, lng: -121.84487999389357 },
+    ],
+    [
+      { name: "Ayres North" },
+      { lat: 39.730809640233716, lng: -121.84393554794221 },
+      { lat: 39.73097259877845, lng: -121.84389531480699 },
+      { lat: 39.73084677006258, lng: -121.84372633563905 },
+      { lat: 39.73087977433816, lng: -121.84367537366776 },
+      { lat: 39.730496098658925, lng: -121.8432140337172 },
+      { lat: 39.73045896864119, lng: -121.8432864533606 },
+      { lat: 39.73071269003064, lng: -121.8435734497252 },
+      { lat: 39.730663183491416, lng: -121.8436458693686 },
+      { lat: 39.730718878345556, lng: -121.84372365343003 },
+      { lat: 39.730663183491416, lng: -121.84382021295457 },
+      { lat: 39.730700313399176, lng: -121.84414476024537 },
+      { lat: 39.731013854045145, lng: -121.84406965839295 },
+    ],
+    [
+      { name: "Kendall South" },
+      { lat: 39.72916328666036, lng: -121.84405593880437 },
+      { lat: 39.729940964693675, lng: -121.84320031412862 },
+      { lat: 39.72965423561745, lng: -121.84294013985418 },
+      { lat: 39.72963154477631, lng: -121.84315739878438 },
+      { lat: 39.72862282620258, lng: -121.84462322601102 },
+      { lat: 39.72880641820728, lng: -121.84499873527311 },
+      { lat: 39.728981758429505, lng: -121.84504701503538 },
+      { lat: 39.729254050596495, lng: -121.84451325544141 },
+      { lat: 39.72945001777842, lng: -121.84475733646177 },
+      { lat: 39.72958410026618, lng: -121.84454544194959 },
+      { lat: 39.72948302272268, lng: -121.84426917442106 },
+      { lat: 39.72949539957269, lng: -121.84413774617933 },
+      { lat: 39.729722308096, lng: -121.84435500510953 },
+      { lat: 39.72981513409481, lng: -121.84425039895795 },
+      { lat: 39.72979863170415, lng: -121.84394194492124 },
+      { lat: 39.729654235617424, lng: -121.84375150808118 },
+      { lat: 39.72965836122409, lng: -121.84360666879438 },
+    ],
+    [
+      { name: "PAC North" },
+      { lat: 39.72879610671361, lng: -121.84355272513717 },
+      { lat: 39.729058085508434, lng: -121.843702928842 },
+      { lat: 39.72864345719303, lng: -121.84322549563736 },
+      { lat: 39.72853618976015, lng: -121.84339983922332 },
+      { lat: 39.72895700719375, lng: -121.843882636846 },
+    ],
+    [
+      { name: "SSC North" },
+      { lat: 39.72763266129833, lng: -121.8459533022055 },
+      { lat: 39.72803491858269, lng: -121.84575213652938 },
+      { lat: 39.727764684460645, lng: -121.84549464446395 },
+      { lat: 39.727397494414205, lng: -121.84610887032837 },
+      { lat: 39.72758108968187, lng: -121.8464763329634 },
+    ],
+    [
+      { name: "WREC North" },
+      { lat: 39.72636811413943, lng: -121.84763772946685 },
+      { lat: 39.726636290841704, lng: -121.84766186934799 },
+      { lat: 39.72629178673349, lng: -121.84727831345886 },
+      { lat: 39.72615563493473, lng: -121.84743924599975 },
+      { lat: 39.72617626401244, lng: -121.84757067424148 },
+      { lat: 39.72613500585086, lng: -121.84765650492996 },
+      { lat: 39.72613088003334, lng: -121.84765382272094 },
+      { lat: 39.7263247931897, lng: -121.8478791282782 },
+      { lat: 39.726471259148376, lng: -121.8479166792044 },
+    ],
+  ]
+
+  // NOTE: demo data, this is not accurate information TODO
+  bathroomCoords = [
+    { lat: 39.727793260680244, lng: -121.84779722583998 },
+    { lat: 39.727250726607274, lng: -121.84736002577056 },
+    { lat: 39.727974792040406, lng: -121.84652317655791 },
+    { lat: 39.72744257374454, lng: -121.84569973839034 },
+    { lat: 39.72721978347061, lng: -121.8461262096237 },
+    { lat: 39.72799542057381, lng: -121.84498090637435 },
+    { lat: 39.72888473692402, lng: -121.84555143613478 },
+    { lat: 39.72907451669378, lng: -121.84655726451537 },
+    { lat: 39.729213502601745, lng: -121.84908627509719 },
+    { lat: 39.729793151625735, lng: -121.84958516597396 },
+    { lat: 39.72936202523599, lng: -121.84830441116935 },
+    { lat: 39.729982606583356, lng: -121.8485109412635 },
+    { lat: 39.73014350429435, lng: -121.84723957419044 },
+    { lat: 39.73095417551031, lng: -121.84555112361556 },
+    { lat: 39.73114394958334, lng: -121.84510051250106 },
+    { lat: 39.730483863599446, lng: -121.84367625951415 },
+    { lat: 39.72993103672472, lng: -121.84357433557159 },
+    { lat: 39.72979489211256, lng: -121.84462576150543 },
+    { lat: 39.72875110782062, lng: -121.84394448041564 },
+  ]
   // define LatLng coordinates for polygon overlay
   const overlayCoords = [
     [
+      // format:
+      // [0] = name OR lat = lng = -1 to deliniate inner path (cut a hole instead of making an overlay)
+      // [1:] = boundary
       { name: "Laxson/Ayres" },
       { lat: 39.7296952586545, lng: -121.84379068088681 },
       { lat: 39.72972001227613, lng: -121.84375581216962 },
@@ -831,14 +1226,14 @@ function initMap() {
     // Holt Hall (inner)
     /*
      * TODO Currently we can only generate one inner path per building
-    [
-      { lat: -2, lng: -2 },
-      { lat: 39.73092884787243, lng: -121.84565107946568 },
-      { lat: 39.73089687500347, lng: -121.8457298693555 },
-      { lat: 39.73084633721262, lng: -121.84569097732478 },
-      { lat: 39.7308777944133, lng: -121.84561352853947 },
-    ],
-    */
+   [
+   { lat: -2, lng: -2 },
+   { lat: 39.73092884787243, lng: -121.84565107946568 },
+   { lat: 39.73089687500347, lng: -121.8457298693555 },
+   { lat: 39.73084633721262, lng: -121.84569097732478 },
+   { lat: 39.7308777944133, lng: -121.84561352853947 },
+   ],
+   */
     // Holt Hall (inner)
     [
       { lat: -1, lng: -1 },
@@ -898,11 +1293,96 @@ function initMap() {
       { lat: 39.730200620363426, lng: -121.8501643839183 },
       { lat: 39.7302913829339, lng: -121.85022942748691 },
     ],
+    [
+      { name: "Modoc Hall" },
+      { lat: 39.73256384573761, lng: -121.84487705681927 },
+      { lat: 39.73224206123805, lng: -121.84463834021695 },
+      { lat: 39.7322956920923, lng: -121.84448813651211 },
+      { lat: 39.73201103554278, lng: -121.84428160641797 },
+      { lat: 39.731961529935944, lng: -121.84438621256955 },
+      { lat: 39.7319883454774, lng: -121.84440767024167 },
+      { lat: 39.731965655404544, lng: -121.84446131442196 },
+      { lat: 39.732101795729704, lng: -121.84456055615551 },
+      { lat: 39.73209560753893, lng: -121.84459274266369 },
+      { lat: 39.7320605411141, lng: -121.84456860278256 },
+      { lat: 39.73199659641113, lng: -121.84470807765133 },
+      { lat: 39.73205435291964, lng: -121.84475099299557 },
+      { lat: 39.732035788332894, lng: -121.84479927275784 },
+      { lat: 39.73243183176567, lng: -121.84508626912243 },
+      { lat: 39.732466898001626, lng: -121.84500580285199 },
+      { lat: 39.73250196421974, lng: -121.84502189610608 },
+    ],
+    [
+      { name: "Child Development Lab" },
+      { lat: 39.733640575255976, lng: -121.8441984579385 },
+      { lat: 39.73355187978187, lng: -121.84413676713116 },
+      { lat: 39.733034143458035, lng: -121.84534376118786 },
+      { lat: 39.73307127208879, lng: -121.84536521885998 },
+      { lat: 39.73307952289289, lng: -121.84533571456082 },
+      { lat: 39.73314552929027, lng: -121.84538131211407 },
+      { lat: 39.73313727849406, lng: -121.84541081641324 },
+      { lat: 39.73317028167302, lng: -121.84543763850338 },
+      { lat: 39.73324041337579, lng: -121.8452793881715 },
+      { lat: 39.73319503404683, lng: -121.84524451945431 },
+    ],
+    [
+      { name: "Aymer J. Hamilton Building" },
+      { lat: 39.733258977638116, lng: -121.8447912261308 },
+      { lat: 39.73305683317919, lng: -121.84464102242596 },
+      { lat: 39.733093961797735, lng: -121.84454446290142 },
+      { lat: 39.733106337999466, lng: -121.84445595000393 },
+      { lat: 39.73309808719855, lng: -121.84444522116787 },
+      { lat: 39.73311046339954, lng: -121.8444130346597 },
+      { lat: 39.73302589264847, lng: -121.84434597943432 },
+      { lat: 39.732982575882154, lng: -121.84444253895886 },
+      { lat: 39.73298876399329, lng: -121.8444505855859 },
+      { lat: 39.73295988613655, lng: -121.84450691197522 },
+      { lat: 39.73294544720363, lng: -121.84460615370877 },
+      { lat: 39.73290345180789, lng: -121.84457128499157 },
+      { lat: 39.732763187645325, lng: -121.84394096587307 },
+      { lat: 39.7326600520496, lng: -121.84397583459027 },
+      { lat: 39.732800316422036, lng: -121.84459810708172 },
+      { lat: 39.73269924359416, lng: -121.844828777057 },
+      { lat: 39.73281062996757, lng: -121.8449172899545 },
+      { lat: 39.73290963992615, lng: -121.84470539544232 },
+      { lat: 39.73298802270919, lng: -121.84476708624966 },
+      { lat: 39.73293851780395, lng: -121.84489046786435 },
+      { lat: 39.733012775148474, lng: -121.8449548408807 },
+      { lat: 39.73307053080557, lng: -121.84482341263897 },
+      { lat: 39.73320976299424, lng: -121.84492399547703 },
+    ],
+    [
+      { lat: -1, lng: -1 },
+      { lat: 39.73113604361628, lng: -121.84329470608007 },
+      { lat: 39.731022591774604, lng: -121.84346368524801 },
+      { lat: 39.730975148221795, lng: -121.84342076990377 },
+      { lat: 39.731098913943185, lng: -121.8432464263178 },
+    ],
+    [
+      { name: "Physical Sciences Building" },
+      { lat: 39.73141393537837, lng: -121.84324374410879 },
+      { lat: 39.73110658483215, lng: -121.84290042135488 },
+      { lat: 39.73106326685976, lng: -121.84296747658026 },
+      { lat: 39.7310116978095, lng: -121.84291383239996 },
+      { lat: 39.730991070178604, lng: -121.84295138332617 },
+      { lat: 39.73097663083332, lng: -121.84293797228109 },
+      { lat: 39.73072291041526, lng: -121.84331348154318 },
+      { lat: 39.73073248296323, lng: -121.84332421037924 },
+      { lat: 39.730664411482124, lng: -121.84343149873983 },
+      { lat: 39.73087819825151, lng: -121.8436782619692 },
+      { lat: 39.730841068439545, lng: -121.84373727056753 },
+      { lat: 39.73097721098563, lng: -121.84389015648138 },
+    ],
   ];
   const ChicoCampusCoords = [
     { lat: 39.7317746199361, lng: -121.84486566422015 },
-    { lat: 39.73122592892507, lng: -121.84439359543353 },
-    { lat: 39.731758118014504, lng: -121.84394298431903 },
+    { lat: 39.733103569036935, lng: -121.84576661341956 },
+    { lat: 39.734177353673836, lng: -121.84322955288697 },
+    { lat: 39.733587428085954, lng: -121.84281112828064 },
+    { lat: 39.73320789287094, lng: -121.84263410248566 },
+    { lat: 39.7330758801324, lng: -121.84250535645295 },
+    { lat: 39.73230029936489, lng: -121.84223682635596 },
+    { lat: 39.73225079396575, lng: -121.84297175162604 },
     { lat: 39.73215416304255, lng: -121.84324024555713 },
     { lat: 39.73150233772464, lng: -121.84312222836047 },
     { lat: 39.73106915926261, lng: -121.84275744793445 },
@@ -941,6 +1421,7 @@ function initMap() {
 
   // construct polygon overlay
 
+  // construct overlay for the transparant boundary that covers entire campus
   map.setOptions({draggableCursor:'default'});
   const boundaryOverlay = new google.maps.Polygon({
     paths: [ChicoCampusCoords],
@@ -951,8 +1432,68 @@ function initMap() {
     fillOpacity: 0.07,
     clickable:false
   });
-  boundaryOverlay.setMap(map);
 
+  // construct overlays for parking lots
+  parkingBounds = new google.maps.LatLngBounds();
+  for (let i = 0; i < parkingCoords.length; i++) {
+    paths = parkingCoords[i].slice(2);
+    parkingOverlays.push(new google.maps.Polygon({
+      paths: paths,
+      strokeColor: "#FF7900",
+      strokeOpacity: .0,
+      strokeWeight: 4,
+      fillcolor: "#BDFCEB",
+      fillOpacity: .0,
+      clickable:false
+    })
+    );
+    if(showOverlays) {
+      parkingOverlays[i].setMap(map);
+    }
+
+    // Map will center around these points once an additional overlay is selected
+    parkingBounds.extend(parkingCoords[i][1]);
+  }
+
+  // construct overlays for wifi coverage
+  wifiBounds = new google.maps.LatLngBounds();
+  for (let i = 0; i < wifiCoords.length; i++) {
+    paths = wifiCoords[i].slice(2);
+    wifiOverlays.push(new google.maps.Polygon({
+      paths: paths,
+      strokeColor: "#C0FFEE",
+      strokeOpacity: .0,
+      strokeWeight: 4,
+      fillcolor: "#BDFCEB",
+      fillOpacity: .0,
+      clickable:false
+    })
+    );
+    if(showOverlays) {
+      wifiOverlays[i].setMap(map);
+    }
+    // Map will center around these points once an additional overlay is selected
+    wifiBounds.extend(wifiCoords[i][1]);
+  }
+
+  // construct overlays for wifi coverage
+  bathroomBounds = new google.maps.LatLngBounds();
+  for (let i = 0; i < bathroomCoords.length; i++) {
+    bathroomPoints.push(new google.maps.Marker({
+      position: bathroomCoords[i],
+      map: map,
+    })
+    );
+    bathroomPoints[i].setVisible(false);
+    if(showOverlays) {
+      bathroomPoints[i].setMap(map);
+    }
+
+    // Map will center around these points once an additional overlay is selected
+    bathroomBounds.extend(bathroomCoords[i]);
+  }
+
+  // construct overlays for campus buildings
   for (let i = 0; i < overlayCoords.length; i++) {
     paths = [];
     if(overlayCoords[i][0].lat < 0 && Number.isInteger(overlayCoords[i][0].lat)) {
@@ -975,6 +1516,7 @@ function initMap() {
       fillOpacity: 0,
     });
     if(showOverlays) {
+      boundaryOverlay.setMap(map);
       overlay.setMap(map);
       google.maps.event.addDomListener(overlay, 'mouseover', function(){
         overlay.setOptions({fillOpacity:0.28});
@@ -986,21 +1528,14 @@ function initMap() {
       });
       google.maps.event.addDomListener(overlay, 'mousedown', function(){
         //alert("You've clicked on " ++ "!");
-        var data = {'buildingName': overlayCoords[i][0].lat, 
+        var data = {'buildingName': overlayCoords[i][0].lat,
       	};
             $.post(url ,data ,doNothing());
-            toggle(displayed); 
+            toggle(displayed);
       });
     }
   }
 
-  const onChangeHandler = function () {
-    calculateAndDisplayRoute(directionsService, directionsRenderer);
-  };
-  document.getElementById("start").addEventListener("change", onChangeHandler);
-  document.getElementById("end").addEventListener("change", onChangeHandler);
-
-  // Create the initial InfoWindow.
   if(debug) {
     var myLatlng = { lat: 39.730041, lng: -121.846298 };
     var infoWindow = new google.maps.InfoWindow(
@@ -1015,8 +1550,8 @@ function initMap() {
 
       // Create a new InfoWindow.
       infoWindow = new google.maps.InfoWindow({position: mapsMouseEvent.latLng});
-      //message += "{ lat: " + mapsMouseEvent.latLng.lat().toString() + ", lng: " + mapsMouseEvent.latLng.lng().toString() + " };<br \>";
-      message += mapsMouseEvent.latLng.lat().toString() + "," +  mapsMouseEvent.latLng.lng().toString() + "<br \>";
+      message += "{ lat: " + mapsMouseEvent.latLng.lat().toString() + ", lng: " + mapsMouseEvent.latLng.lng().toString() + " },<br \>";
+      //message += mapsMouseEvent.latLng.lat().toString() + "," +  mapsMouseEvent.latLng.lng().toString() + "<br \>";
       infoWindow.setContent(message);
       infoWindow.open(map);
       google.maps.event.addListener(infoWindow, 'closeclick', function() {
@@ -1025,21 +1560,25 @@ function initMap() {
     });
 
   }
- 
+
+  const onChangeHandler = function () {
+    calculateAndDisplayRoute(directionsService, directionsRenderer);
+  };
+  document.getElementById("start").addEventListener("change", onChangeHandler);
+  document.getElementById("end").addEventListener("change", onChangeHandler);
 
 }
 
 function calculateAndDisplayRoute(directionsService, directionsRenderer) {
-  directionsService.route(
-    {
-      origin: {
-        query: document.getElementById("start").value,
-      },
-      destination: {
-        query: document.getElementById("end").value,
-      },
-      travelMode: google.maps.TravelMode.WALKING,
+  directionsService.route({
+    origin: {
+      query: document.getElementById("start").value,
     },
+    destination: {
+      query: document.getElementById("end").value,
+    },
+    travelMode: google.maps.TravelMode.WALKING,
+  },
     (response, status) => {
       if (status === "OK") {
         directionsRenderer.setDirections(response);
@@ -1059,6 +1598,56 @@ function toggle(disp) {
   	document.getElementById('sidebar').classList.toggle('collapsed');
 		displayed = true;
 	}
+}
+
+// TODO don't use shitty global variables
+let parkingLotsEnabled = false;
+function toggleParkingLotOverlays() {
+  if(!parkingLotsEnabled) {
+    for(let i = 0; i < parkingOverlays.length; i++) {
+      parkingOverlays[i].setOptions({fillOpacity:0.3});
+      parkingOverlays[i].setOptions({strokeOpacity:0.8});
+    }
+    map.fitBounds(parkingBounds);
+  } else {
+    for(let i = 0; i < parkingOverlays.length; i++) {
+      parkingOverlays[i].setOptions({fillOpacity:0});
+      parkingOverlays[i].setOptions({strokeOpacity:0});
+    }
+  }
+  parkingLotsEnabled = !parkingLotsEnabled;
+}
+
+let wifiCoverageEnabled = false;
+function toggleWifiCoverageOverlays() {
+  if(!wifiCoverageEnabled) {
+    for(let i = 0; i < wifiOverlays.length; i++) {
+      wifiOverlays[i].setOptions({fillOpacity:0.3});
+      wifiOverlays[i].setOptions({strokeOpacity:0.8});
+    }
+    map.fitBounds(wifiBounds);
+  } else {
+    for(let i = 0; i < wifiOverlays.length; i++) {
+      wifiOverlays[i].setOptions({fillOpacity:0});
+      wifiOverlays[i].setOptions({strokeOpacity:0});
+    }
+  }
+  wifiCoverageEnabled = !wifiCoverageEnabled;
+}
+
+let bathroomPointsEnabled = false;
+function toggleBathroomPoints() {
+  if(!bathroomPointsEnabled) {
+    for(let i = 0; i < bathroomPoints.length; i++) {
+      bathroomPoints[i].setVisible(true);
+    }
+    map.fitBounds(bathroomBounds);
+  } else {
+    for(let i = 0; i < bathroomPoints.length; i++) {
+      bathroomPoints[i].setVisible(false);
+    }
+  }
+  bathroomPointsEnabled = !bathroomPointsEnabled;
 }
 
 function clubToggle() {
@@ -1114,15 +1703,3 @@ function searchBuilding(bnlat ,bnlng) {
 function doNothing() {
 
 }
-
-/*
-for (i = 0; i < coll.length; i++) {
-  coll[i].addEventListener("click", function() {
-    this.classList.toggle("active");
-    var content = this.nextElementSibling;
-    if (content.style.display === "block") {
-      content.style.display = "none";
-    } else {
-      content.style.display = "block";
-    }
-  });*/

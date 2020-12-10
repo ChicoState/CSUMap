@@ -15,7 +15,7 @@
 				{%endif%}
 				{% if buildings.buildingName %}
 				<b id = "text" class = "center">  {{buildings.buildingName}} </b>
-				{% else %} 
+				{% else %}
 				<p id = "text" class = "center"> Search for a building or click on one to get information about it! </p>
 				{% endif %}
 				{% if buildings.bUrl %}
@@ -24,7 +24,7 @@
 				<button onClick = "descToggle()" type="button" id = "collapsible"> Building Description </button>
 				<div id = "desc-content">
 					<p id = "text2" class = "center"> {{buildings.buildingDesc}} </p>
-				</div>	
+				</div>
 				<button onClick = "clubToggle()" type="button" id = "collapsible"> Clubs </button>
 				<div id = "club-content">
 					<p id = "text2" class = "center"> {{buildings.clubs}} </p>
@@ -108,7 +108,7 @@
 		<div id = "content">
 		<ul>
 			<li><a href="{% url 'home' %}">Home</a></li>
-			<li> 
+			<li>
 			<form action="\", method = "POST">
 				{% csrf_token %}
 				{{formIns}}
@@ -120,12 +120,12 @@
 			</li>
 		</ul>
 
-		<script type="text/javascript"> 
+		<script type="text/javascript">
 			var bnlat = "{{bnlat}}";
-			var bnlng = "{{bnlng}}";  
-			url = "{% url 'search' %}"     
+			var bnlng = "{{bnlng}}";
+			url = "{% url 'search' %}"
 		 </script>
-	
+
     <div id="map">
       <script type="text/javascript" src="{% static 'CSUMapSite/js/maps.js' %}"></script>
       <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAhe-DDc6oPRLz3UtZcJWRJPGGkXY46w7g&callback=initMap" type="text/javascript"></script>
