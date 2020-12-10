@@ -36,11 +36,11 @@ def search(request):
         bname = "No name 3"
         buildings = ""
     context ={
-         "bnlat" : bLat,
-         "bnlng" : bLng,
-         "formIns": mapFormIns,
-         "bnname" : bname,
-				 "buildings" : buildings
+        "bnlat" : bLat,
+        "bnlng" : bLng,
+        "formIns": mapFormIns,
+        "bnname" : bname,
+		"buildings" : buildings
     }
     return render(request, 'index.html', context = context)
 
