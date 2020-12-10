@@ -1,8 +1,8 @@
 from django import forms
 BUILDING_LIST =( 
     ("39.72786079343008,-121.84729082054753,O'Connell Center", 'O\'Connell Hall'),
-    ("39.72747763926558,-121.84696559524535,Langdon Hall" ,"Langdon Hall"),
-    ("39.729408290689484,-121.84348322002653,Arts and Humanities", "Arts and Humanities"), 
+    ("39.72747763926558,-121.84696559524535,Langdon Engineering Center" ,"Langdon Hall"),
+    ("39.729408290689484,-121.84348322002653,Arts and Humanities Building", "Arts and Humanities"), 
     ("39.72881007297421,-121.84433079807523,Performing Arts Center", "Performing Arts Center"), 
     ("39.72863038312888,-121.8498702988007,Yolo Hall", "Yolo Hall"), 
     ("39.730658400597356,-121.84885337563796,Whitney Hall", "Whitney Hall"),
@@ -25,6 +25,9 @@ BUILDING_LIST =(
     ("39.72935698981375,-121.84903633993237,Shurmer Gymnasium", "Shurmer Gymnasium"), 
     ("39.729608652454175,-121.84834969442456,Plumas Hall", "Plumas Hall"),
     ("39.731016897747175,-121.84535178177333,Holt Hall", "Holt Hall"),
+	("39.728130430298755,-121.84625690300886,Merriam Library" , "Merriam Library"),
+    ("39.72965383339868,-121.84362421420995,Laxson Auditorium", "Laxson Auditorium"),
+    ("39.72965383339868,-121.84362421420995,Ayres Hall", "Aryes Hall"),                        
 ) 
 
 class mapForm(forms.Form):

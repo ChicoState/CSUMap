@@ -26,7 +26,7 @@ function initMap() {
     },
   });
 
-  searchBuilding(bnlat , bnlng);
+  searchBuilding(bnlat , bnlng, name);
 
   // Enable directions services
   const directionsService = new google.maps.DirectionsService();
@@ -1684,7 +1684,7 @@ function cltrToggle() {
 }
 
 
-function searchBuilding(bnlat ,bnlng) {
+function searchBuilding(bnlat ,bnlng , name) {
 	toggle(displayed);
   if(bnlat == ""||bnlng ==""){
   }
@@ -1695,7 +1695,7 @@ function searchBuilding(bnlat ,bnlng) {
       map.setCenter(marker.getPosition());
       marker.setMap(null);
       }
-      console.log("Done is done")
+
 }
 
 
