@@ -1518,7 +1518,6 @@ function initMap() {
     if(showOverlays) {
       boundaryOverlay.setMap(map);
       campusOverlays.push([overlay, campusCoords[i][0].name]);
-      console.log(campusOverlays.length);
       overlay.setMap(map);
       google.maps.event.addDomListener(overlay, 'mouseover', function(){
         overlay.setOptions({fillOpacity:0.28});
@@ -1594,7 +1593,6 @@ function calculateAndDisplayRoute(directionsService, directionsRenderer) {
 }
 
 function toggle(disp) {
-	console.log(disp);
 	if(disp) {
 		doNothing();
 	}
