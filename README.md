@@ -1,6 +1,6 @@
 # CSU Chico Virtual Map
 
-[![Build Status](https://travis-ci.org/ChicoState/CSUMap.svg?branch=master)](https://travis-ci.org/ChicoState/CSUMap)
+[![Build Status](https://travis-ci.com/ChicoState/CSUMap.svg?branch=master)](https://travis-ci.com/ChicoState/CSUMap)
 
 ## Developers
 
