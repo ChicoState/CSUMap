@@ -22,7 +22,7 @@ SECRET_KEY = '&$nifp3&-vba&5wol_k(qj*-kybg-rma*0)^a7l)ki69o52e%e'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['192.168.86.30', 'localhost' , '127.0.0.1']
+ALLOWED_HOSTS = ['192.168.86.30', 'localhost' , '127.0.0.1', 'csu-map.herokuapp.com']
 
 
 # Application definition
