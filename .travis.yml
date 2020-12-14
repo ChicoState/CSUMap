@@ -7,3 +7,6 @@ before_install:
         - docker ps
 script:
         - docker-compose run web python /code/CSUMapSite/manage.py test
+        - cd resources
+        - python3 webdriver.py
+        - cd ..
