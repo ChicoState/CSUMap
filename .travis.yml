@@ -9,7 +9,7 @@ script:
 - docker-compose run web python /code/CSUMapSite/manage.py test
 deploy:
   provider: heroku
-  api_key: 2c3a960b-e418-4150-ac21-bed7c9dcefbd
+  api_key:
     secure: qZI1tfgY8iwx6Vv4YSWqlOsyDUmZAAUYyubWAkRyoJxnQNJ5XhJgjdMwjm3+HZufAih0xKIcdiik4cmFrzCNiex1qosFAvkW4kByoW8htFUidqvPXhHSatFhRil+fgKhnkoqQh1ZegFQXjbO5oCet6ziAGz31sGBhunojqLoxelt9sXrKYuV/O9iXgDFk5X6cmrTNQ4TbzsaWoEHUupZUcBuNvv29BVFxvfAKmELPAAyPnMNJHqn0HblqB63tfAfqBA3+CEacN326fS9NGKEW/4gyOi78VpQNZb2HLD4B+25ZfGSqFeu9r4O7olRfLuGBnzMKBM/ZB2wcWj8Xa8+G88ELfS2/UygZ9CIPRUlyY/HphmDbbhEsXGo+T6TgD+6RsSeMEEDiK288b2n6J1QEzJUbLkDjHkwutp65hGbfHdN3oYrugS0AhokNpdcWNsb4W98kOuPhW8DStq6ZR3wzuCFlvBwzM7QhFF3Fyt2ftHD9VbIrVpKvfJD0A9C8bbOkfq+l6S+nzbolqdow+psn/qhJ/oSXfZLopDyraNI2ZW3OrFwHlQIKUqYlWhfJkRXygtPezqR+635IGx6VxgITviefykdOb3LqIvSR5G6+96weHUg0+VwiOIrHVHr2tMb1z4cYGgDKZ528JxtdfSQ5nY1bePEjhcYkANHoWRGBj4=
   app: csu-map
 addons:
