@@ -11,4 +11,5 @@ with webdriver.Chrome("./chromedriver") as driver:
   time.sleep(1)
   driver.find_element_by_id("submit_main").click()
   assert(driver.find_element_by_id("text").text == 'Holt Hall')
+  print("[SELENIUM] All tests passed")
 
