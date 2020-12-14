@@ -63,10 +63,10 @@ html, body {
 	padding: 10px;
 }
 
-#collapsible {
-	background-color: #99CCFF;
+.collapsible {
+  background-color: #99CCFF;
   cursor: pointer;
-	color: white;
+  color: white;
   padding: 18px;
   width: 100%;
   border: none;

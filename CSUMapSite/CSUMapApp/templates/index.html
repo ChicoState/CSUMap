@@ -21,15 +21,15 @@
 				{% if buildings.bUrl %}
 				<a href = "{{buildings.bUrl}}" target = "_blank" id = "text2" class = "center">Layout & Room Photos</a>
 				{% endif %}
-				<button onClick = "descToggle()" type="button" id = "collapsible"> Building Description </button>
+				<button onClick = "descToggle()" type="button" class="collapsible" id="buildingDescriptionDropdown"> Building Description </button>
 				<div id = "desc-content">
 					<p id = "text2" class = "center"> {{buildings.buildingDesc}} </p>
 				</div>
-				<button onClick = "clubToggle()" type="button" id = "collapsible"> Clubs </button>
+				<button onClick = "clubToggle()" type="button" class="collapsible" id="clubListDropdown"> Clubs </button>
 				<div id = "club-content">
 					<p id = "text2" class = "center"> {{buildings.clubs}} </p>
 				</div>
-				<button onClick = "cltrToggle()" type="button" id = "collapsible"> Walking Directions & Buidling Search </button>
+				<button onClick = "cltrToggle()" type="button" class='collapsible' id="walkingDirectionsDropdown"> Walking Directions & Building Search </button>
 				<div id = "cltr-content">
 					<div id="floating-panel">
 						<b id = "text2" class = "center"> Enter building names for walking directions! </b>
@@ -98,8 +98,9 @@
 					<br>
 					<form action="\", method = "POST">
 					{% csrf_token %}
-					{{formIns}}
-					<input type = "submit" name = "search" value="Search Building">
+					<!--{{formIns}}-->
+				<!--	<input type="submit" id="search_main" name="search" value="Search Building"> -->
+				<!--<input type = "submit" id="search_main" name = "search" value="Search Building">-->
 				 </form>
 				</div>
 
@@ -112,14 +113,15 @@
 			<form action="\", method = "POST">
 				{% csrf_token %}
 				{{formIns}}
-				<input type = "submit" name = "search" value="Search Building">
+				<!-- <input type = "submit" name = "search_sidebar" value="Search Building"> -->
+				<input type = "submit" id="submit_main" name = "search" value="Search Building">
 			 </form>
 			</li>
 			<li>
-				<button onClick="toggle()">Toggle Sidebar</button>
-                <button onClick="toggleParkingLotOverlays()">Show parking lots</button>
-                <button onClick="toggleWifiCoverageOverlays()">Show wifi coverage</button>
-                <button onClick="toggleBathroomPoints()">Show bathroom locations</button>
+				<button id="sidebarButton" onClick="toggle()">Toggle Sidebar</button>
+                <button id="parkingOverlayButton" onClick="toggleParkingLotOverlays()">Show parking lots</button>
+                <button id="wifiOverlayButton"  onClick="toggleWifiCoverageOverlays()">Show wifi coverage</button>
+                <button id="restroomButton" onClick="toggleBathroomPoints()">Show restroom locations</button>
 			</li>
 		</ul>
 
