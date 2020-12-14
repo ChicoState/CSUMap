@@ -2,4 +2,4 @@ build:
   docker:
     web: Dockerfile
 run:
-  web: python /CSUMapSite/manage.py runserver 0.0.0.0:8000
+  web: python /code/CSUMapSite/manage.py runserver 0.0.0.0:8000
